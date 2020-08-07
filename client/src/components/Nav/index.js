@@ -1,20 +1,20 @@
 import React from 'react'
 import styled from '@emotion/styled';
-import { Link } from 'react-router';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 export const Nav = styled.nav`
     display: flex;
     position: fixed;
     bottom: 0;
-    width: 100%;
+    right:0;
     background-color: cyan; 
 `
 
 export default function Navbar() {
     return (
         <Nav>
-
-            This is a navbar
+            <Link to="/slider">Slider view</Link>
+            <Link to="/">Catalog View</Link>
         </Nav>
     )
 }
