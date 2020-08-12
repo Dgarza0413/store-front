@@ -32,6 +32,7 @@ const GridPage = () => {
                     <React.Fragment key={i}>
                         <Link to="/detail">
                             <Image
+                                style={{ margin: 'auto' }}
                                 src={e.image.src}
                                 alt={'alt'}
                             />
