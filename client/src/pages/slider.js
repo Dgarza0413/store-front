@@ -28,7 +28,7 @@ const SliderPage = () => {
         customPaging: function (i) {
             return (
                 <div>
-                    {<img style={{width: '30px', height: '30px'}} src={`${data[i].image.src}`} />}
+                    {<img style={{ width: '30px', height: '30px' }} src={`${data[i].image.src}`} />}
                 </div>
             );
         },
@@ -55,43 +55,43 @@ const SliderPage = () => {
 
     return (
         <>
-        {/* <Progress/> */}
-        <Slider {...settings}>
-            {data.map((e, i) => {
-                return (
-                    <React.Fragment key={i}>
-                              <Grid>
-                            <Link to="/detail" style={{alignSelf: 'center'}}>
-                                <Image
-                                    src={e.image.src}
-                                    alt={'alt'}
-                                />
-                            </Link>
-                            <div style={{marginTop: '8%'}}>
-                                <h1>{e.title}</h1>
-                                <div style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    float: 'left'
-                                }}>
-                                    {
-                                e.variants.map(e => {
-                                    return (
-                                        <Chip 
-                                            price={e.price}
-                                            title={e.title}
-                                            quantity={e.inventory_quantity}
-                                        />
-                                )}
-                                )
-                                }
+            {/* <Progress/> */}
+            <Slider {...settings}>
+                {data.map((e, i) => {
+                    return (
+                        <React.Fragment key={i}>
+                            <Grid>
+                                <Link to="/detail" style={{ alignSelf: 'center' }}>
+                                    <Image
+                                        src={e.image.src}
+                                        alt={'alt'}
+                                    />
+                                </Link>
+                                <div style={{ marginTop: '8%' }}>
+                                    <h1>{e.title}</h1>
+                                    <div style={{
+                                        display: 'flex',
+                                        flexWrap: 'warp'
+                                    }}>
+                                        {
+                                            e.variants.map(e => {
+                                                return (
+                                                    <Chip
+                                                        price={e.price}
+                                                        title={e.title}
+                                                        quantity={e.inventory_quantity}
+                                                    />
+                                                )
+                                            }
+                                            )
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                              </Grid>
-                    </React.Fragment>
-                )
-            })}
-        </Slider>
+                            </Grid>
+                        </React.Fragment>
+                    )
+                })}
+            </Slider>
         </>
     );
 }
