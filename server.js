@@ -7,8 +7,6 @@ const app = express();
 
 const PORT = 3001 || process.env.PORT;
 
-console.log(PORT)
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(compression());
@@ -18,6 +16,11 @@ app.use(cors());
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
 }
+
+app.use((req, res) => {
+    // res.sendFile(path.join(__dirname, "client/build/index.html"));
+    res.sendFile(path.join(__dirname, "../client/public/index.html"));
+})
 
 
 app.get('/api/products', (req, res) => {
