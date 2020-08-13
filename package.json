@@ -1,6 +1,23 @@
 {
+  "name": "store-front",
   "version": "0.1.0",
+  "description": "",
   "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && yarn start",
+    "install": "cd client && yarn install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build",
+    "test": "exit 0",
+    "format": "prettier --write --single-quote --no-semi --print-width=120 --tab-width=2 \"src/**/*.{js,jsx} \"",
+    "lint": "eslint '**/*.{js,jsx}' --quiet",
+    "lint:fix": "eslint '**/*.{js,jsx}' --fix"
+  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
     "compression": "^1.7.4",
