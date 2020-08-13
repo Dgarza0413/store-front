@@ -52,7 +52,7 @@ const SliderPage = () => {
     };
 
     const shopifyApi = () => {
-        axios.get('http://localhost:3001/api/products')
+        axios.get('/api/products')
             .then(res => setData(res.data.products))
             .catch(err => console.error(err))
     }
