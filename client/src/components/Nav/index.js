@@ -4,17 +4,15 @@ import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 export const Nav = styled.nav`
     display: flex;
-    position: fixed;
-    bottom: 0;
-    right:0;
-    background-color: cyan; 
+    width: 100%;
 `
 
 export default function Navbar() {
     return (
         <Nav>
-            <Link to="/slider">Slider view</Link>
-            <Link to="/">Catalog View</Link>
+            <h1 style={{ marginLeft: '25px' }}>Smoke N More</h1>
+            {/* <Link to="/slider">Slider view</Link>
+            <Link to="/">Catalog View</Link> */}
         </Nav>
     )
 }

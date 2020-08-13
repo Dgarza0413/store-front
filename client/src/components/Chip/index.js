@@ -7,8 +7,11 @@ export const Format = styled.div`
     margin: 10px;
     padding: 5px 10px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
 `
 
 const Chip = ({ price, title, quantity }) => {
@@ -16,8 +19,8 @@ const Chip = ({ price, title, quantity }) => {
         <Format>
             {
                 quantity > 0
-                    ? <span>&#9989;</span>
-                    : <span>&#10060;</span>
+                    ? <div>&#9989;</div>
+                    : <div>&#10060;</div>
             }
             <div>
                 ${price}
@@ -26,7 +29,7 @@ const Chip = ({ price, title, quantity }) => {
                 {
                     title === "Default Title"
                         ? ""
-                        : `- ${title}`
+                        : `-${title}`
                 }
             </div>
         </Format>

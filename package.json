@@ -1,4 +1,6 @@
 {
+  "version": "0.1.0",
+  "main": "server.js",
   "dependencies": {
     "axios": "^0.19.2",
     "compression": "^1.7.4",
