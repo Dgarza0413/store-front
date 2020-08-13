@@ -15,7 +15,7 @@
     "lint": "eslint '**/*.{js,jsx}' --quiet",
     "lint:fix": "eslint '**/*.{js,jsx}' --fix"
   },
-  "author": "",
+  "author": "David Garza <dgarza0413@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
@@ -26,5 +26,6 @@
   },
   "devDependencies": {
     "concurrently": "^5.2.0"
-  }
+  },
+  "repository": "git@github.com:Dgarza0413/store-front.git"
 }
