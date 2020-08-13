@@ -1,4 +1,5 @@
 const axios = require('axios');
+const path = require('path');
 const express = require('express');
 const Sharp = require('sharp');
 const compression = require('compression');
