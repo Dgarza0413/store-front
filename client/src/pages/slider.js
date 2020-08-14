@@ -51,10 +51,14 @@ const SliderPage = () => {
         slidesToScroll: 1
     };
 
-    const shopifyApi = () => {
-        axios.get('/api/products')
-            .then(res => setData(res.data.products))
-            .catch(err => console.error(err))
+    const shopifyApi = async () => {
+        try {
+        const {data} = await axios.get('/api/products')
+        setData(data.products)
+            
+        } catch (error) {
+            console.error(error)
+    }
     }
 
     useEffect(() => {

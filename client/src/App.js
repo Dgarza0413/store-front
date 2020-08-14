@@ -13,8 +13,6 @@ const App = () => {
       <Navbar />
       <Switch>
         <Route exact path="/" component={SliderPage} />
-        {/* <Route exact path="/slider" component={SliderPage} /> */}
-        <Route exact path="/detail" component={DetailPage} />
       </Switch>
     </Router>
   );
