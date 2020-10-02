@@ -1,10 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import GridPage from './pages/grid';
-import SliderPage from './pages/slider';
-import DetailPage from './pages/detail';
-
+import homePage from './pages/home';
 import Navbar from './components/Nav';
 
 const App = () => {
@@ -12,7 +9,7 @@ const App = () => {
     <Router>
       <Navbar />
       <Switch>
-        <Route exact path="/" component={SliderPage} />
+        <Route exact path="/" component={homePage} />
       </Switch>
     </Router>
   );

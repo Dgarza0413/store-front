@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import styled from '@emotion/styled';
 
 export const Image = styled.img`
@@ -15,10 +14,14 @@ export const Grid = styled.div`
 const GridPage = () => {
     const [data, setData] = useState([])
 
-    const shopifyApi = () => {
-        axios.get('http://localhost:3001/api/products')
-            .then(res => setData(res.data.products))
-            .catch(err => console.error(err))
+    const shopifyApi = async () => {
+        try {
+            const res = await fetch('/api/products');
+            const data = await res.json();
+            console.log(data)
+        } catch (error) {
+            console.error(error)
+        };
     }
 
     useEffect(() => {
@@ -27,7 +30,7 @@ const GridPage = () => {
 
     return (
         <Grid>
-            {data.map((e, i) => {
+            {/* {data.map((e, i) => {
                 return (
                     <React.Fragment key={i}>
                         <Link to="/detail">
@@ -39,7 +42,7 @@ const GridPage = () => {
                         </Link>
                     </React.Fragment>
                 )
-            })}
+            })} */}
         </Grid>
     );
 }

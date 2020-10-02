@@ -10,6 +10,7 @@
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build",
+    "seed": "node utils/seed.js",
     "test": "exit 0",
     "format": "prettier --write --single-quote --no-semi --print-width=120 --tab-width=2 \"src/**/*.{js,jsx} \"",
     "lint": "eslint '**/*.{js,jsx}' --quiet",
@@ -18,11 +19,15 @@
   "author": "David Garza <dgarza0413@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
+    "@fast-csv/parse": "^4.3.2",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "sharp": "^0.25.4"
+    "faker": "^5.1.0",
+    "fast-csv": "^4.3.2",
+    "mongoose": "^5.10.6",
+    "sharp": "^0.25.4",
+    "shortid": "^2.2.15"
   },
   "devDependencies": {
     "concurrently": "^5.2.0"
