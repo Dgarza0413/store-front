@@ -14,10 +14,11 @@ export const Form = styled.form`
 
 
 const SearchForm = () => {
+    const [settings, setSettings] = useState([])
     const fetchSettings = async () => {
         const res = await fetch('/api/v1/products/unique/settings')
         const data = await res.json()
-        console.log(data)
+        setSettings(data)
     }
 
     useEffect(() => {
@@ -26,8 +27,7 @@ const SearchForm = () => {
 
     return (
         <Form>
-            <label>label one</label>
-            <input />
+
         </Form>
     )
 }

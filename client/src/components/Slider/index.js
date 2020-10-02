@@ -66,7 +66,7 @@ const SliderPage = () => {
     }
 
     useEffect(() => {
-        // getData()
+        getData()
     }, [])
 
     return (
