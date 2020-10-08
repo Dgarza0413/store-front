@@ -2,51 +2,47 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from "react-slick";
 import styled from '@emotion/styled';
-import Progress from '../Progress';
-import Chip from '../Chip';
+import { Image } from 'cloudinary-react';
+import { FaIceCream, FaAppleAlt } from 'react-icons/fa';
+import { RiPlantFill } from 'react-icons/ri';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./style.css"
 
-export const Image = styled.img`
-  width: 500px;
-  height: 500px;
-`
+// export const Image = styled.img`
+//   width: 500px;
+//   height: 500px;
+// `
+
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 50px;
 `
 
+
+
 const SliderPage = () => {
     const [data, setData] = useState([])
     const [slideIndex, setSlideIndex] = useState(0);
     const [updateCount, setUpdateCount] = useState();
 
+    const [options, setOptions] = useState(
+        [
+            { flavor: 'cream', icon: 'FaIceCream' },
+            { flavor: 'tobacco', icon: 'RiPlantFill' },
+            { flavor: 'fruity', icon: 'FaAppleAlt' }
+        ]
+    )
+
     const index = useRef()
 
     const settings = {
-        customPaging: function (i) {
-            return (
-                <div>
-                    {
-                        // <img style={{
-                        //     width: '30px',
-                        //     height: '30px'
-                        // }}
-                        // src={`${data[i].image.src}`}
-                        // />
-                    }
-                </div>
-            );
-        },
-        dots: true,
+        // dots: true,
         dotsClass: "slick-dots slick-thumb",
         infinite: true,
         speed: 500,
-        // autoplay: true,
-        // autoplaySpeed: 2000,
         afterChange: () => setUpdateCount({ updateCount: updateCount + 1 }),
         beforeChange: (current, next) => setSlideIndex({ slideIndex: next }),
         lazyLoad: true,
@@ -82,7 +78,11 @@ const SliderPage = () => {
                         return (
                             <React.Fragment key={i}>
                                 <Grid>
-                                    <img src={`https://picsum.photos/500/500?random=${Math.floor(Math.random() * 200) + 1}`} />
+                                    {
+                                        e.pictureURI
+                                            ? <img src={e.pictureURI} />
+                                            : <img src={`https://picsum.photos/500/500?random=${Math.floor(Math.random() * 200) + 1}`} />
+                                    }
                                     <div style={{
                                         marginTop: '8%',
                                     }}>
@@ -103,13 +103,35 @@ const SliderPage = () => {
                                             })}
                                         </div>
                                         <div>
+                                            {
+                                                options.map(e => {
+                                                    if (e.icon === 'FaIceCream') {
+                                                        return (
+                                                            <FaIceCream size="30px" />
+                                                        )
+                                                    } else if (e.icon === "RiPlantFill") {
+                                                        return (
+                                                            <RiPlantFill size="30px" />
+                                                        )
+                                                    } else if (e.icon === "FaAppleAlt") {
+                                                        return (
+                                                            <FaAppleAlt size="30px" />
+                                                        )
+                                                    } else
+                                                        return (
+                                                            <div>{e}</div>
+                                                        )
+                                                })
+                                            }
+                                        </div>
+                                        <div>
                                             <div>Size</div>
-                                            {e.size.map(e => {
+                                            {e.size.map((e, i) => {
                                                 return (
-                                                    <>
+                                                    <React.Fragment key={i}>
                                                         <label>{e}</label>
                                                         <input type="radio" name="size" value={e} />
-                                                    </>
+                                                    </React.Fragment>
                                                 )
                                             })}
                                         </div>

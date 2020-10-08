@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from '@emotion/styled';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 export const Nav = styled.nav`
     display: flex;
@@ -13,7 +12,7 @@ export const Nav = styled.nav`
 const Navbar = () => {
     return (
         <Nav>
-            <h1 style={{ marginLeft: '25px' }}>Smoke N More</h1>
+            <h1 style={{ marginLeft: '25px' }}>Rock N Roll It</h1>
         </Nav>
     )
 }

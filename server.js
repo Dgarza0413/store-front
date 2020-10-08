@@ -29,6 +29,22 @@ app.get('/api/v1/products', (req, res) => {
         .catch(err => console.error(err))
 });
 
+app.get('/api/v1/products/table', (req, res) => {
+    db.Product
+        .find()
+        .limit(10)
+        .then(response => res.json(response))
+        .catch(err => console.error(err))
+});
+
+app.get('/api/v1/products/:id', (req, res) => {
+    db.Product
+        .findOne({ uuid: req.params.id })
+        .then(response => res.json(response))
+        .catch(err => console.error(err))
+});
+
+
 app.get('/api/v1/products/unique/settings', (req, res) => {
     db.Product.aggregate(
         [{
@@ -44,14 +60,6 @@ app.get('/api/v1/products/unique/settings', (req, res) => {
         .then(response => res.json(response[0]))
         .catch(err => console.error(err))
 })
-
-app.get('/api/v1/products/type/:id', (req, res) => {
-    console.log('select type of vape')
-});
-
-app.get('/api/v1/products/brand/:id', (req, res) => {
-    console.log('select type of brand after type')
-});
 
 app.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, "../client/build/index.html"));
