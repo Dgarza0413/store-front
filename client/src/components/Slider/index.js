@@ -1,14 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useRef, Suspense } from 'react';
 import Slider from "react-slick";
 import styled from '@emotion/styled';
+import Container from 'react-bootstrap/Container';
 import { Image } from 'cloudinary-react';
-import { FaIceCream, FaAppleAlt } from 'react-icons/fa';
-import { RiPlantFill } from 'react-icons/ri';
+
+import Card from '../Card';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./style.css"
+
+const LazyCard = React.lazy(() => import('../Card'));
 
 // export const Image = styled.img`
 //   width: 500px;
@@ -28,14 +30,6 @@ const SliderPage = () => {
     const [slideIndex, setSlideIndex] = useState(0);
     const [updateCount, setUpdateCount] = useState();
 
-    const [options, setOptions] = useState(
-        [
-            { flavor: 'cream', icon: 'FaIceCream' },
-            { flavor: 'tobacco', icon: 'RiPlantFill' },
-            { flavor: 'fruity', icon: 'FaAppleAlt' }
-        ]
-    )
-
     const index = useRef()
 
     const settings = {
@@ -46,8 +40,8 @@ const SliderPage = () => {
         afterChange: () => setUpdateCount({ updateCount: updateCount + 1 }),
         beforeChange: (current, next) => setSlideIndex({ slideIndex: next }),
         lazyLoad: true,
-        slidesToShow: 1,
-        slidesToScroll: 1
+        slidesToShow: 3,
+        slidesToScroll: 3
     };
 
     const getData = async () => {
@@ -70,74 +64,22 @@ const SliderPage = () => {
             {/* <Progress/> */}
             <div style={{
                 width: '100%',
-                boxSizing: 'border-box',
-                padding: '0% 3% 0% 0%'
+                boxSizing: 'border-box'
             }}>
                 <Slider ref={index} {...settings}>
                     {data.map((e, i) => {
                         return (
                             <React.Fragment key={i}>
-                                <Grid>
-                                    {
-                                        e.pictureURI
-                                            ? <img src={e.pictureURI} />
-                                            : <img src={`https://picsum.photos/500/500?random=${Math.floor(Math.random() * 200) + 1}`} />
-                                    }
-                                    <div style={{
-                                        marginTop: '8%',
-                                    }}>
-
-                                        <h1>{e.flavor}</h1>
-                                        <h2>{e.brand}</h2>
-                                        <div>
-                                            <div>
-                                                flavors
-                                                </div>
-                                            {e.nicotineStrength.map(e => {
-                                                return (
-                                                    <>
-                                                        <label>{e}</label>
-                                                        <input type="radio" name="nicotineStrength" value={e} />
-                                                    </>
-                                                )
-                                            })}
-                                        </div>
-                                        <div>
-                                            {
-                                                options.map(e => {
-                                                    if (e.icon === 'FaIceCream') {
-                                                        return (
-                                                            <FaIceCream size="30px" />
-                                                        )
-                                                    } else if (e.icon === "RiPlantFill") {
-                                                        return (
-                                                            <RiPlantFill size="30px" />
-                                                        )
-                                                    } else if (e.icon === "FaAppleAlt") {
-                                                        return (
-                                                            <FaAppleAlt size="30px" />
-                                                        )
-                                                    } else
-                                                        return (
-                                                            <div>{e}</div>
-                                                        )
-                                                })
-                                            }
-                                        </div>
-                                        <div>
-                                            <div>Size</div>
-                                            {e.size.map((e, i) => {
-                                                return (
-                                                    <React.Fragment key={i}>
-                                                        <label>{e}</label>
-                                                        <input type="radio" name="size" value={e} />
-                                                    </React.Fragment>
-                                                )
-                                            })}
-                                        </div>
-                                        <p>{e.description}</p>
-                                    </div>
-                                </Grid>
+                                <Suspense fallback={
+                                    <div
+                                        style={{
+                                            height: '500px',
+                                            width: '18rem',
+                                            backgroundColor: 'lightgray'
+                                        }}></div>
+                                }>
+                                    <Card data={e} />
+                                </Suspense>
                             </React.Fragment>
                         )
                     })}

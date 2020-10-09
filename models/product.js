@@ -20,10 +20,10 @@ const productSchema = new Schema({
         type: String,
         default: ''
     },
-    flavorKeywords: [{
+    profile: {
         type: String,
         default: ''
-    }],
+    },
     price: {
         type: String,
         default: ''

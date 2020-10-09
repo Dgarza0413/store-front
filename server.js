@@ -29,15 +29,36 @@ app.get('/api/v1/products', (req, res) => {
         .catch(err => console.error(err))
 });
 
+app.get('/api/v1/products/table/length', (req, res) => {
+    db.Product
+        .count()
+        .then(response => res.json(response))
+        .catch(err => console.error(err))
+
+})
+
 app.get('/api/v1/products/table', (req, res) => {
     db.Product
         .find()
+        // .skip(req.params)
         .limit(10)
         .then(response => res.json(response))
         .catch(err => console.error(err))
 });
 
-app.get('/api/v1/products/:id', (req, res) => {
+app.get('/api/v1/products/:page', (req, res) => {
+    const { page } = req.params
+    const skip = page * 10
+    db.Product
+        .find()
+        .skip(skip)
+        .limit(10)
+        .then(response => res.json(response))
+        .catch(err => console.error(err))
+});
+
+
+app.get('/api/v1/product/:id', (req, res) => {
     db.Product
         .findOne({ uuid: req.params.id })
         .then(response => res.json(response))

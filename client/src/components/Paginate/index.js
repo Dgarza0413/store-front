@@ -1,12 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Pagination from 'react-bootstrap/Pagination';
 
-const index = () => {
+
+const Paginate = ({ currentPage, setCurrentPage }) => {
+    const [paginateLength, setPaginateLength] = useState();
+    const [active, setActive] = useState(1);
+
+    const pages = Math.ceil(paginateLength / 10)
+
+    const fetchCollectionLength = async () => {
+        const res = await fetch('/api/v1/products/table/length');
+        const data = await res.json(res)
+        await setPaginateLength(data)
+    }
+
+    const handleCurrentPage = (action) => {
+        if (currentPage <= pages && currentPage > 0) {
+            switch (action) {
+                case 'increment':
+                    return setCurrentPage(currentPage + 1);
+                case 'decrement':
+                    return setCurrentPage(currentPage - 1);
+                default:
+                    break;
+            }
+        } else {
+            return console.log('error')
+        }
+    }
+
+
+    useEffect(() => {
+        fetchCollectionLength()
+    }, [])
+
     return (
-        <Pagination>
-            <Pagination.First />
-            <Pagination.Prev />
-            <Pagination.Item>{1}</Pagination.Item>
+        <>
+            <div className='justify-content-center'>Page {currentPage} of {pages}</div>
+            <Pagination className='justify-content-center text-wrap'>
+                {/* <Pagination.First /> */}
+                <Pagination.Prev disabled={currentPage === 1} onClick={() => handleCurrentPage("decrement")} />
+                {/* <Pagination.Item>{1}</Pagination.Item>
             <Pagination.Ellipsis />
 
             <Pagination.Item>{10}</Pagination.Item>
@@ -16,11 +50,12 @@ const index = () => {
             <Pagination.Item disabled>{14}</Pagination.Item>
 
             <Pagination.Ellipsis />
-            <Pagination.Item>{20}</Pagination.Item>
-            <Pagination.Next />
-            <Pagination.Last />
-        </Pagination>
+            <Pagination.Item>{20}</Pagination.Item> */}
+                <Pagination.Next disabled={currentPage === pages} onClick={() => handleCurrentPage("increment")} />
+                {/* <Pagination.Last /> */}
+            </Pagination>
+        </>
     )
 }
 
-export default index
+export default Paginate
