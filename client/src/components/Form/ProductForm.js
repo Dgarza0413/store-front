@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
@@ -7,6 +7,26 @@ import Row from 'react-bootstrap/Row';
 
 const ProductForm = ({ data, setData }) => {
     console.log(data)
+    let history = useHistory();
+
+
+    const postData = async (url, data) => {
+        // Default options are marked with *
+        const response = await fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+    }
 
     const handleChange = (e) => {
         const { value, name } = e.target
@@ -18,10 +38,19 @@ const ProductForm = ({ data, setData }) => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('handle Submit')
-
+        try {
+            await postData(`/api/v1/product/${data.uuid}`, {
+                ...data,
+                // size: data.size.split(",") || [],
+                // nicotineStrength: data.nicotineStrength.split(",") || []
+            })
+        } catch (error) {
+            console.error(error)
+        } finally {
+            history.push('/admin')
+        }
     }
 
     return (
@@ -36,7 +65,7 @@ const ProductForm = ({ data, setData }) => {
                         data && Object
                             .entries(data)
                             .map(e => {
-                                if (e[0] === "_id" || e[0] === "__v") {
+                                if (e[0] === "_id" || e[0] === "__v" || e[0] === "flavorKeywords") {
                                     return
                                 } else if (e[0] === "description") {
                                     return (
@@ -84,7 +113,11 @@ const ProductForm = ({ data, setData }) => {
                                 }
                             })
                     }
-                    <Button>Submit</Button>
+                </Row>
+                <Row>
+                    <Col>
+                        <Button type='submit'>Submit</Button>
+                    </Col>
                 </Row>
             </Form>
         </>

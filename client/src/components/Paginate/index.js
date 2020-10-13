@@ -6,7 +6,7 @@ const Paginate = ({ currentPage, setCurrentPage }) => {
     const [paginateLength, setPaginateLength] = useState();
     const [active, setActive] = useState(1);
 
-    const pages = Math.ceil(paginateLength / 10)
+    const pages = Math.floor(paginateLength / 10)
 
     const fetchCollectionLength = async () => {
         const res = await fetch('/api/v1/products/table/length');
@@ -21,6 +21,10 @@ const Paginate = ({ currentPage, setCurrentPage }) => {
                     return setCurrentPage(currentPage + 1);
                 case 'decrement':
                     return setCurrentPage(currentPage - 1);
+                case 'first':
+                    return setCurrentPage(1)
+                case 'last':
+                    return setCurrentPage(pages)
                 default:
                     break;
             }
@@ -28,7 +32,6 @@ const Paginate = ({ currentPage, setCurrentPage }) => {
             return console.log('error')
         }
     }
-
 
     useEffect(() => {
         fetchCollectionLength()
@@ -38,7 +41,7 @@ const Paginate = ({ currentPage, setCurrentPage }) => {
         <>
             <div className='justify-content-center'>Page {currentPage} of {pages}</div>
             <Pagination className='justify-content-center text-wrap'>
-                {/* <Pagination.First /> */}
+                <Pagination.First disabled={currentPage === 1} onClick={() => handleCurrentPage("first")} />
                 <Pagination.Prev disabled={currentPage === 1} onClick={() => handleCurrentPage("decrement")} />
                 {/* <Pagination.Item>{1}</Pagination.Item>
             <Pagination.Ellipsis />
@@ -52,7 +55,7 @@ const Paginate = ({ currentPage, setCurrentPage }) => {
             <Pagination.Ellipsis />
             <Pagination.Item>{20}</Pagination.Item> */}
                 <Pagination.Next disabled={currentPage === pages} onClick={() => handleCurrentPage("increment")} />
-                {/* <Pagination.Last /> */}
+                <Pagination.Last disabled={currentPage === pages} onClick={() => handleCurrentPage("last")} />
             </Pagination>
         </>
     )

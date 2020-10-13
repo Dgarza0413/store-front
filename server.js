@@ -17,6 +17,12 @@ app.use(cors());
 
 databaseConfig();
 
+// db.Product.updateMany(
+//     {},
+//     { $set: { profile: '' } },
+//     { multi: true }
+// )
+
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
@@ -64,6 +70,14 @@ app.get('/api/v1/product/:id', (req, res) => {
         .then(response => res.json(response))
         .catch(err => console.error(err))
 });
+
+app.post('/api/v1/product/:id', (req, res) => {
+    // console.log(req.body)
+    db.Product
+        .findOneAndUpdate({ uuid: req.params.id }, req.body)
+        .then(response => res.json(response))
+        .catch(err => console.error(err))
+})
 
 
 app.get('/api/v1/products/unique/settings', (req, res) => {
