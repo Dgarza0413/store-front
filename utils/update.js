@@ -1,8 +1,24 @@
 const db = require('../models');
+const mongoose = require("mongoose");
 
-//update many 
-db.Product.updateMany(
-    {},
-    { $set: { profile: '' } },
-    { multi: true }
-)
+
+const updateDB = () => {
+    mongoose.connect((process.env.MONGO_URI || 'mongodb://localhost/store-front'),
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false,
+        });
+
+    console.log('mongoose connected!!')
+    //update many 
+    db.Product.updateMany(
+        {},
+        { $set: { profile: '' } },
+        { multi: true }
+    )
+
+    console.log("update complete")
+}
+
+updateDB();
