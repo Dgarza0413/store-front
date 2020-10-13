@@ -12,7 +12,9 @@ const index = ({ data }) => {
             <Card.Img
                 variant="top"
                 className="rounded-circle"
-                src={`https://picsum.photos/300/300?random=${Math.floor(Math.random() * 200) + 1}`} />
+                // src={`https://picsum.photos/300/300?random=${Math.floor(Math.random() * 200) + 1}`} 
+                src={data.pictureURI || `https://picsum.photos/300/300?random=${Math.floor(Math.random() * 200) + 1}`}
+            />
             <Card.Body>
                 <Card.Title>
                     {data.flavor}
