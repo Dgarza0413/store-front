@@ -11,6 +11,7 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build",
     "seed": "node utils/seed.js",
+    "update": "node utils/update.js",
     "test": "exit 0",
     "format": "prettier --write --single-quote --no-semi --print-width=120 --tab-width=2 \"src/**/*.{js,jsx} \"",
     "lint": "eslint '**/*.{js,jsx}' --quiet",
