@@ -16,14 +16,12 @@ const Home = () => {
         await setData(data)
     }
 
-    console.log(data)
-
     useEffect(() => {
         fetchAll()
     }, [])
+
     return (
         <Wrapper>
-            <SearchForm />
             <SliderPage />
         </Wrapper>
     )

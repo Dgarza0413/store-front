@@ -19,21 +19,67 @@ export const FormStyle = styled.div`
 
 
 const SearchForm = () => {
-    const [settings, setSettings] = useState([])
+    const [settings, setSettings] = useState([]);
+    const [search, setSearch] = useState({ brand: '', type: '', profile: '' });
+    const [searchData, setSearchData] = useState([]);
+
+    console.log(searchData)
+
     const fetchSettings = async () => {
         const res = await fetch('/api/v1/products/unique/settings')
         const data = await res.json()
         await setSettings(data)
     }
 
-    console.log(settings)
+    const postData = async (url, data) => {
+        // Default options are marked with *
+        const response = await fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+        const dataRes = await response.json(); // parses JSON response into native JavaScript objects
+        await setSearchData(dataRes);
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await postData(`/api/v1/products/search`, search)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const handleChange = async (e) => {
+        const { name, value } = e.target;
+        try {
+            await setSearch(prev => {
+                return {
+                    ...prev,
+                    [name]: value
+                }
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     useEffect(() => {
         fetchSettings();
     }, [])
 
     return (
         <FormStyle>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Form.Row>
                     {
                         settings && Object
@@ -44,9 +90,7 @@ const SearchForm = () => {
                                 } else {
                                     return (
                                         <Form.Group key={e[0]} as={Col} controlId="formGridCity">
-                                            {/* // <Col sm={3} key={e[0]}> */}
-                                            {/* <Form.Label>{e[0]}</Form.Label> */}
-                                            <Form.Control className="mt-3" as="select" defaultValue="Brand...">
+                                            <Form.Control className="mt-3" as="select" defaultValue="Brand..." name={e[0]} onChange={handleChange}>
                                                 <option>{e[0]}</option>
                                                 {
                                                     e[1] && e[1].map(e => {
@@ -56,18 +100,14 @@ const SearchForm = () => {
                                                     })
                                                 }
                                             </Form.Control>
-                                            {/* // </Col> */}
                                         </Form.Group>
                                     )
                                 }
                             })
                     }
-                    <Form.Group as={Col}>
-                        {/* <Col sm={{ span: 10, offset: 2 }}> */}
-                        <Form.Label>Search</Form.Label>
-                        <Button type="submit">Sign in</Button>
-                        {/* </Col> */}
-                    </Form.Group>
+                    <Col sm="auto">
+                        <Button className="mt-3" type="submit">Search</Button>
+                    </Col>
                 </Form.Row>
             </Form>
         </FormStyle>

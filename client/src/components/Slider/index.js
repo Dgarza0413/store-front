@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import styled from '@emotion/styled';
 import Container from 'react-bootstrap/Container';
 import { Image } from 'cloudinary-react';
+import Spinner from 'react-bootstrap/Spinner';
 
 import Card from '../Card';
 
@@ -33,7 +34,6 @@ const SliderPage = () => {
     const index = useRef()
 
     const settings = {
-        // dots: true,
         dotsClass: "slick-dots slick-thumb",
         infinite: true,
         speed: 500,
@@ -61,7 +61,6 @@ const SliderPage = () => {
 
     return (
         <>
-            {/* <Progress/> */}
             <div style={{
                 width: '100%',
                 boxSizing: 'border-box'
@@ -69,23 +68,22 @@ const SliderPage = () => {
                 <Slider ref={index} {...settings}>
                     {data.map((e, i) => {
                         return (
-                            <React.Fragment key={i}>
-                                <Suspense fallback={
-                                    <div
-                                        style={{
-                                            height: '500px',
-                                            width: '18rem',
-                                            backgroundColor: 'lightgray'
-                                        }}></div>
-                                }>
-                                    <Card data={e} />
-                                </Suspense>
-                            </React.Fragment>
+                            <Suspense fallback={
+                                <div
+                                    style={{
+                                        height: '500px',
+                                        width: '18rem',
+                                        backgroundColor: 'lightgray'
+                                    }}>
+                                    <Spinner animation="grow" />
+                                </div>
+                            }>
+                                <LazyCard data={e} />
+                            </Suspense>
                         )
                     })}
                 </Slider>
             </div>
-            {/* <label>item {updateCount} of {data.length}</label> */}
             <input
                 style={{ marginTop: '20px', width: '100%' }}
                 onChange={e => index.current.slickGoTo(e.target.value)}

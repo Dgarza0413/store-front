@@ -1,20 +1,30 @@
 import React, { useState, Suspense } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+
+import Image from './Image';
 
 import './styles.css';
+const LazyImage = React.lazy(() => import("./Image"));
 
 const index = ({ data }) => {
     return (
         <Card
             className="border-0"
             style={{ width: '18rem' }}>
-            <Card.Img
-                variant="top"
-                className="rounded-circle"
-                // src={`https://picsum.photos/300/300?random=${Math.floor(Math.random() * 200) + 1}`} 
-                src={data.pictureURI || `https://picsum.photos/300/300?random=${Math.floor(Math.random() * 200) + 1}`}
-            />
+            <Suspense fallback={
+                <div
+                    style={{
+                        height: '500px',
+                        width: '18rem',
+                        backgroundColor: 'lightgray'
+                    }}>
+                    <Spinner animation="grow" />
+                </div>
+            }>
+                <LazyImage src={data.pictureURI} />
+            </Suspense>
             <Card.Body>
                 <Card.Title>
                     {data.flavor}
@@ -26,7 +36,6 @@ const index = ({ data }) => {
                 <Card.Text className="line-clamp">
                     {data.description}
                 </Card.Text>
-                {/* <Button variant="primary">Go somewhere</Button> */}
             </Card.Body>
         </Card>
     )

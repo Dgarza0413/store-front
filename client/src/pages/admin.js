@@ -9,8 +9,6 @@ const Admin = () => {
     const [data, setData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
-    console.log(data)
-
     const fetchAll = async () => {
         const res = await fetch('/api/v1/products/table');
         const data = await res.json()

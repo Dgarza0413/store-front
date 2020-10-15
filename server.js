@@ -17,12 +17,6 @@ app.use(cors());
 
 databaseConfig();
 
-db.Product.updateMany(
-    {},
-    { $set: { profile: '' } },
-    { multi: true }
-)
-
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
@@ -71,6 +65,7 @@ app.get('/api/v1/product/:id', (req, res) => {
         .catch(err => console.error(err))
 });
 
+
 app.post('/api/v1/product/:id', (req, res) => {
     db.Product
         .findOneAndUpdate({ uuid: req.params.id }, req.body)
@@ -87,13 +82,52 @@ app.get('/api/v1/products/unique/settings', (req, res) => {
                 _id: 0,
                 brand: { $addToSet: '$brand' },
                 type: { $addToSet: '$type' },
-                price: { $addToSet: '$price' }
+                profile: { $addToSet: '$profile' }
             }
         }]
     )
         .then(response => res.json(response[0]))
         .catch(err => console.error(err))
 })
+
+app.post('/api/v1/products/search', (req, res) => {
+    db.Product.aggregate([
+        {
+            $project:
+            {
+                brand: 1,
+                description: 1,
+                discountPercent: 1,
+                discountPrice: 1,
+                flavor: 1,
+                flavorKeywords: 1,
+                nicotineStrength: 1,
+                pictureURI: 1,
+                price: 1,
+                profile: 1,
+                profile: 1,
+                size: 1,
+                type: 1,
+                uuid: 1,
+                viscosity: 1,
+                _id: 0,
+                set: {
+                    $and: [
+                        { $eq: ["$brand", req.body.brand] },
+                        { $eq: ["$type", req.body.type] },
+                        { $eq: ["$profile", req.body.profile] }
+                    ]
+                },
+            }
+        },
+        {
+            $match: { "set": true }
+        }
+
+    ])
+        .then(response => { return res.json(response) })
+        .catch(err => console.error(err))
+});
 
 app.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, "../client/build/index.html"));
