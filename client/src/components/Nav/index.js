@@ -19,10 +19,10 @@ const Navbar = () => {
     return (
         <Nav>
             <h1 style={{ marginLeft: '25px' }}>Rock N Roll It</h1>
-            <Link to="/admin">
-                Add
+            {/* <Link to="/admin"> */}
+            {/* Add */}
             {/* <button style={{ marginRight: '25px', listStyle: 'none' }} onClick={() => loginWithRedirect()}>Signin</button> */}
-            </Link>
+            {/* </Link> */}
         </Nav>
     )
 }
