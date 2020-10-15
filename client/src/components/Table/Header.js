@@ -10,7 +10,8 @@ const Header = ({ data }) => {
                         e === "__v" ||
                         e === "_id" ||
                         e === "viscosity" ||
-                        e === "pictureURI" ||
+                        e === "discountPercent" ||
+                        // e === "pictureURI" ||
                         e === "flavorKeywords"
                     ) {
                         return

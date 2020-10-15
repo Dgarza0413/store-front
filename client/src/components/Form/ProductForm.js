@@ -9,7 +9,6 @@ const ProductForm = ({ data, setData }) => {
     console.log(data)
     let history = useHistory();
 
-
     const postData = async (url, data) => {
         // Default options are marked with *
         const response = await fetch(url, {
@@ -65,7 +64,11 @@ const ProductForm = ({ data, setData }) => {
                         data && Object
                             .entries(data)
                             .map(e => {
-                                if (e[0] === "_id" || e[0] === "__v" || e[0] === "flavorKeywords") {
+                                if (
+                                    e[0] === "_id" ||
+                                    e[0] === "__v" ||
+                                    e[0] === "flavorKeywords"
+                                ) {
                                     return
                                 } else if (e[0] === "description") {
                                     return (

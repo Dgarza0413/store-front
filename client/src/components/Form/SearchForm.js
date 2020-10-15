@@ -23,8 +23,6 @@ const SearchForm = () => {
     const [search, setSearch] = useState({ brand: '', type: '', profile: '' });
     const [searchData, setSearchData] = useState([]);
 
-    console.log(searchData)
-
     const fetchSettings = async () => {
         const res = await fetch('/api/v1/products/unique/settings')
         const data = await res.json()

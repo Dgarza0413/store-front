@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
 import Table from '../components/Table';
 import Paginate from '../components/Paginate';
 
-import Button from 'react-bootstrap/Button';
-
-const Admin = () => {
+const Admin = (props) => {
     const [data, setData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -31,10 +28,14 @@ const Admin = () => {
 
     return (
         <>
-            <Table data={data} />
+            <Table
+                pageId={props.match.params.id}
+                data={data}
+            />
             <Paginate
                 currentPage={currentPage}
-                setCurrentPage={setCurrentPage} />
+                setCurrentPage={setCurrentPage}
+            />
         </>
     )
 }

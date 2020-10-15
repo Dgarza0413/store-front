@@ -18,7 +18,10 @@ const Detail = (props) => {
 
     return (
         <Container>
-            <ProductForm setData={setData} data={data} />
+            <ProductForm
+                setData={setData}
+                data={data}
+            />
         </Container>
     )
 }

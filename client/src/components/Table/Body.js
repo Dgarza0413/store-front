@@ -13,7 +13,8 @@ const Body = ({ data }) => {
                                 e[0] === "__v" ||
                                 e[0] === "_id" ||
                                 e[0] === "viscosity" ||
-                                e[0] === "pictureURI" ||
+                                e[0] === "discountPercent" ||
+                                // e[0] === "pictureURI" ||
                                 e[0] === "flavorKeywords"
                             ) {
                                 return
@@ -22,6 +23,16 @@ const Body = ({ data }) => {
                                     <Link to={`/admin/product/${e[1]}`}>
                                         {e[1]}
                                     </Link>
+                                )
+                            } else if (e[0] === "pictureURI") {
+                                return (
+                                    <div>
+                                        {
+                                            e[1] === ""
+                                                ? "no uri"
+                                                : "uri exists"
+                                        }
+                                    </div>
                                 )
                             } else {
                                 return (
