@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Table from '../components/Table';
 import Paginate from '../components/Paginate';
+import Navbar from '../components/Nav';
 
 const Admin = (props) => {
     const [data, setData] = useState([])
@@ -28,6 +29,7 @@ const Admin = (props) => {
 
     return (
         <>
+            <Navbar />
             <Table
                 pageId={props.match.params.id}
                 data={data}

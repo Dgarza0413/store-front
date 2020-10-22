@@ -26,11 +26,12 @@ export const Grid = styled.div`
 
 
 
-const SliderPage = () => {
-    const [data, setData] = useState([])
+const SliderPage = ({data}) => {
+    // const [data, setData] = useState([])
     const [slideIndex, setSlideIndex] = useState(0);
     const [updateCount, setUpdateCount] = useState();
 
+console.log(data)
     const index = useRef()
 
     const settings = {
@@ -44,19 +45,19 @@ const SliderPage = () => {
         slidesToScroll: 3
     };
 
-    const getData = async () => {
-        try {
-            const res = await fetch('/api/v1/products')
-            const data = await res.json()
-            await setData(data)
+    // const getData = async () => {
+    //     try {
+    //         const res = await fetch('/api/v1/products')
+    //         const data = await res.json()
+    //         await setData(data)
 
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
 
     useEffect(() => {
-        getData()
+        // getData()
     }, [])
 
     return (

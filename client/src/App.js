@@ -5,12 +5,12 @@ import homePage from './pages/home';
 import adminPage from './pages/admin';
 import detailPage from './pages/detail';
 
-import Navbar from './components/Nav';
+// import Navbar from './components/Nav';
 
 const App = () => {
   return (
     <Router>
-      <Navbar />
+      {/* <Navbar /> */}
       <Switch>
         <Route exact path="/" component={homePage} />
         <Route exact path="/admin" component={adminPage} />

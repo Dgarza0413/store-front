@@ -34,8 +34,7 @@ app.get('/api/v1/products/table/length', (req, res) => {
         .count()
         .then(response => res.json(response))
         .catch(err => console.error(err))
-
-})
+});
 
 app.get('/api/v1/products/table', (req, res) => {
     db.Product
@@ -65,6 +64,13 @@ app.get('/api/v1/product/:id', (req, res) => {
         .catch(err => console.error(err))
 });
 
+app.get('/api/v1/profile/:profile', (req, res) => {
+    db.Product
+        .find({ profile: { $all: [req.params.profile] } })
+        .then(response => res.json(response))
+        .catch(err => console.error(err))
+})
+
 
 app.post('/api/v1/product/:id', (req, res) => {
     db.Product
@@ -80,8 +86,6 @@ app.get('/api/v1/products/unique/settings', (req, res) => {
             $group:
             {
                 _id: 0,
-                brand: { $addToSet: '$brand' },
-                type: { $addToSet: '$type' },
                 profile: { $addToSet: '$profile' }
             }
         }]
@@ -89,45 +93,6 @@ app.get('/api/v1/products/unique/settings', (req, res) => {
         .then(response => res.json(response[0]))
         .catch(err => console.error(err))
 })
-
-app.post('/api/v1/products/search', (req, res) => {
-    db.Product.aggregate([
-        {
-            $project:
-            {
-                brand: 1,
-                description: 1,
-                discountPercent: 1,
-                discountPrice: 1,
-                flavor: 1,
-                flavorKeywords: 1,
-                nicotineStrength: 1,
-                pictureURI: 1,
-                price: 1,
-                profile: 1,
-                profile: 1,
-                size: 1,
-                type: 1,
-                uuid: 1,
-                viscosity: 1,
-                _id: 0,
-                set: {
-                    $and: [
-                        { $eq: ["$brand", req.body.brand] },
-                        { $eq: ["$type", req.body.type] },
-                        { $eq: ["$profile", req.body.profile] }
-                    ]
-                },
-            }
-        },
-        {
-            $match: { "set": true }
-        }
-
-    ])
-        .then(response => { return res.json(response) })
-        .catch(err => console.error(err))
-});
 
 app.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, "../client/build/index.html"));
