@@ -48,10 +48,10 @@ const Navbar = ({setData}) => {
                     )
                 })
             }
-            <Link to="/admin">
+            {/* <Link to="/admin">
                 Add
             <button style={{ marginRight: '25px', listStyle: 'none' }} onClick={() => loginWithRedirect()}>Signin</button>
-            </Link>
+            </Link> */}
         </Nav>
     )
 }
