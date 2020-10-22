@@ -64,6 +64,13 @@ app.get('/api/v1/product/:id', (req, res) => {
         .catch(err => console.error(err))
 });
 
+app.delete('/api/v1/product/:id', (req, res) => {
+    db.Product
+        .findOneAndRemove({ uuid: req.params.id })
+        .then(response => res.status(200).send("delete request complete"))
+        .catch(err => console.error(err))
+})
+
 app.get('/api/v1/profile/:profile', (req, res) => {
     db.Product
         .find({ profile: { $all: [req.params.profile] } })
