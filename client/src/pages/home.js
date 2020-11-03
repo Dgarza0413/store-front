@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
     align-items: center;
     align-content: center;
     background-image: url(${Icon});
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 `
