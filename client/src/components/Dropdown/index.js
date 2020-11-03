@@ -12,9 +12,10 @@ const Index = (props) => {
     }
     return (
         <DropdownButton
-            // as={ButtonGroup}
-            style={{ marginRight: '10px' }}
-            id={`dropdown-variants`}
+            as={ButtonGroup}
+            className="mr-3 bg-dark text-white"
+            variant="dark"
+            id={`dropdown-variants-dark`}
             title={'select product'}
         >
             {
