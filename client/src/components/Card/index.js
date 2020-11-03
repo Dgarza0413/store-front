@@ -12,7 +12,7 @@ const index = ({ data }) => {
     return (
         <Card
             className="border-0"
-            style={{ width: '18rem' }}>
+            style={{ width: '18rem', backgroundColor: 'transparent' }}>
             <Suspense fallback={
                 <div
                     style={{

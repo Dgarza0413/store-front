@@ -26,12 +26,12 @@ export const Grid = styled.div`
 
 
 
-const SliderPage = ({data}) => {
+const SliderPage = ({ data }) => {
     // const [data, setData] = useState([])
     const [slideIndex, setSlideIndex] = useState(0);
     const [updateCount, setUpdateCount] = useState();
 
-console.log(data)
+    console.log(data)
     const index = useRef()
 
     const settings = {
@@ -41,8 +41,35 @@ console.log(data)
         afterChange: () => setUpdateCount({ updateCount: updateCount + 1 }),
         beforeChange: (current, next) => setSlideIndex({ slideIndex: next }),
         lazyLoad: true,
-        slidesToShow: 3,
-        slidesToScroll: 3
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        pauseOnHover: true,
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                    // dots: false
+                }
+            },
+            {
+                breakpoint: 900,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 2
+                }
+            },
+            {
+                breakpoint: 650,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
     };
 
     // const getData = async () => {
@@ -84,15 +111,15 @@ console.log(data)
                         )
                     })}
                 </Slider>
+                <input
+                    style={{ marginTop: '20px', width: '100%' }}
+                    onChange={e => index.current.slickGoTo(e.target.value)}
+                    value={undefined || slideIndex.slideIndex || 0}
+                    type="range"
+                    min={0}
+                    max={data.length}
+                />
             </div>
-            <input
-                style={{ marginTop: '20px', width: '100%' }}
-                onChange={e => index.current.slickGoTo(e.target.value)}
-                value={undefined || slideIndex.slideIndex || 0}
-                type="range"
-                min={0}
-                max={data.length}
-            />
         </>
     );
 }
