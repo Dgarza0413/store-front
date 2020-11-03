@@ -7,7 +7,7 @@ import Icon from '../rock-n-roll-it-icon.png'
 
 export const Wrapper = styled.div`
     padding: 5%;
-    height: 94vh;
+    height: 90vh;
     display: flex;
     align-items: center;
     align-content: center;
