@@ -26,6 +26,12 @@ const Navbar = ({ setData }) => {
         await setSettingsFilters(data.profile);
     }
 
+    const handleFilterClick = async (e) => {
+        const res = await fetch(`/api/v1/profile/${e}`)
+        const data = await res.json();
+        await setData(data);
+    }
+
     useEffect(() => {
         fetchFilters();
     }, [])
@@ -33,7 +39,14 @@ const Navbar = ({ setData }) => {
     return (
         <Nav>
             <h1 style={{ marginLeft: '25px' }}>Rock N Roll It</h1>
-            { settingFilters && <Dropdown settingFilters={settingFilters} setData={setData} />}
+            {/* { settingFilters && <Dropdown settingFilters={settingFilters} setData={setData} />} */}
+            {/* <div className={'mr-2'}> */}
+            {settingFilters.map(e => {
+                return (
+                    <div className={'mr-4'} onClick={() => handleFilterClick(e)}>{e}</div>
+                )
+            })}
+            {/* </div> */}
             {/* <Link to="/admin">
                 Add
             <button style={{ marginRight: '25px', listStyle: 'none' }} onClick={() => loginWithRedirect()}>Signin</button>
