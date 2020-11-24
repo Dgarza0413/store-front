@@ -16,6 +16,10 @@ const productSchema = new Schema({
         type: String,
         default: ''
     },
+    types: [{
+        type: String,
+        default: ''
+    }],
     flavor: {
         type: String,
         default: ''
@@ -24,6 +28,10 @@ const productSchema = new Schema({
         type: String,
         default: ''
     },
+    profiles: [{
+        type: String,
+        default: ''
+    }],
     price: {
         type: String,
         default: ''

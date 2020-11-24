@@ -12,11 +12,20 @@ const updateDB = () => {
 
     console.log('mongoose connected!!')
     //update many 
-    db.Product.updateMany(
+    db.Product.update(
         {},
-        { $set: { profile: '' } },
-        { multi: true }
-    )
+        {
+            $set: {
+                profiles: '',
+                types: ''
+            }
+        },
+        {
+            upsert: false,
+            multi: true
+        })
+        .then((res) => console.log('update finished'))
+        .catch(err => console.error(err))
 
     console.log("update complete")
 }
