@@ -29,7 +29,9 @@ const index = ({ data }) => {
                     />
                 </div>
                 <div className="d-flex position-absolute">
-                    <div className="d-flex flex-column">
+                    <Badge profile={data.type} />
+                    <Badge profile={data.profile} />
+                    {/* <div className="d-flex flex-column">
                         {data.types.map(e => {
                             return <Badge profile={e} />
                         })}
@@ -38,7 +40,7 @@ const index = ({ data }) => {
                         {data.profiles.map(e => {
                             return <Badge profile={e} />
                         })}
-                    </div>
+                    </div> */}
                 </div>
             </Suspense>
             <Card.Body>

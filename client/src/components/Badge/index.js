@@ -19,7 +19,7 @@ const index = (props) => {
             case 'original':
                 return <Badge variant='info' className="mr-3 mb-2">{props.profile}</Badge>
             default:
-                break;
+                return <Badge variant='primary' className="mr-3 mb-2">{props.profile}</Badge>
         }
     }
     return (
