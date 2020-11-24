@@ -30,7 +30,7 @@ const Image = ({ src, nicotineStrength, size }) => {
                 <Overlay
                     show={show}
                     target={target}
-                    placement="bottom"
+                    placement="right"
                     container={ref.current}
                     containerPadding={20}
                 >
