@@ -11,3 +11,11 @@
     -webkit-box-orient: vertical;  
     overflow: hidden;
 }
+
+.bottom {
+  bottom: 0;
+}
+
+.right {
+  right: 0
+}

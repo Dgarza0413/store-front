@@ -1,9 +1,7 @@
-import React, { useState, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
-
-import Image from './Image';
+import Badge from '../Badge';
 
 import './styles.css';
 const LazyImage = React.lazy(() => import("./Image"));
@@ -23,7 +21,17 @@ const index = ({ data }) => {
                     <Spinner animation="grow" />
                 </div>
             }>
-                <LazyImage src={data.pictureURI} />
+                <div className="position-relative">
+                    <LazyImage
+                        src={data.pictureURI}
+                        nicotineStrength={data.nicotineStrength}
+                        size={data.size}
+                    />
+                </div>
+                <div className="d-flex position-absolute">
+                    <Badge profile={data.type} />
+                    <Badge profile={data.profile} />
+                </div>
             </Suspense>
             <Card.Body>
                 <Card.Title>
