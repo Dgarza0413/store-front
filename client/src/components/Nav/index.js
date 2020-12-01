@@ -40,9 +40,9 @@ const Navbar = ({ setData }) => {
         <Nav>
             <h1 style={{ marginLeft: '25px' }}>Rock N Roll It</h1>
             {/* { settingFilters && <Dropdown settingFilters={settingFilters} setData={setData} />} */}
-            {settingFilters.map(e => {
+            {settingFilters.map((e, i) => {
                 return (
-                    <div className={'mr-4'} onClick={() => handleFilterClick(e)}>{e}</div>
+                    <div key={e.toString()} className={'mr-4'} onClick={() => handleFilterClick(e)}>{e}</div>
                 )
             })}
             {/* <Link to="/admin">

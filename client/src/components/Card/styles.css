@@ -19,3 +19,22 @@
 .right {
   right: 0
 }
+
+.image-overlay {
+  position: absolute;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16rem;
+  height: 16rem;
+  border-radius: 50%;
+  padding: 20% 10%;
+  box-sizing: border-box;
+  color: white;
+  backdrop-filter: brightness(50%);
+}
+
+.display {
+  display: initial;
+}

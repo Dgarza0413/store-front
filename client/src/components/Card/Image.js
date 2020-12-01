@@ -5,26 +5,33 @@ import Popover from 'react-bootstrap/Popover';
 import Overlay from 'react-bootstrap/Overlay';
 // import { Image } from  'cloudinary-react';
 
-
-
-const Image = ({ src, nicotineStrength, size }) => {
+const Image = ({ src, nicotineStrength, size, description }) => {
     const [show, setShow] = useState(false);
+    const [overlay, setOverlay] = useState(false);
     const [target, setTarget] = useState(null);
     const ref = useRef(null);
 
     const handleClick = (event) => {
-        console.log(event.target)
         setShow(!show);
         setTarget(event.target);
     };
 
+    const handleOverlay = (e) => {
+        setOverlay(!overlay)
+    }
+
     return (
         <>
+            <div onClick={handleOverlay} className={`image-overlay ${overlay ? 'display' : ''}`}>
+                {description}
+            </div>
             <Card.Img
                 variant="top"
-                style={{ height: '18rem' }}
+                style={{ height: '16rem' }}
                 className="rounded-circle "
-                src={src || `https://picsum.photos/300/300?random=${Math.floor(Math.random() * 200) + 1}`} />
+                src={src || `https://picsum.photos/300/300?random=${Math.floor(Math.random() * 200) + 1}`}
+                onClick={handleOverlay}
+            />
             <div ref={ref} className="d-flex position-absolute right bottom">
                 <Button onClick={handleClick}>Sizes</Button>
                 <Overlay
