@@ -1,24 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
-import Dropdown from '../Dropdown';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
-export const Nav = styled.nav`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #273043;
-    // background-color: #9197AE;
-    color: #EFF6EE;
-    width: 100%;
-`
-
-const Navbar = ({ setData }) => {
+const NavbarComp = ({ setData }) => {
     const [settingFilters, setSettingsFilters] = useState([])
-
-    const { loginWithRedirect } = useAuth0();
 
     const fetchFilters = async () => {
         const res = await fetch(`/api/v1/products/unique/settings`);
@@ -32,25 +19,69 @@ const Navbar = ({ setData }) => {
         await setData(data);
     }
 
+    const fetchAll = async () => {
+        const res = await fetch('/api/v1/products');
+        const data = await res.json()
+        await setData(data)
+    }
+
+    const handleSelect = async (e) => {
+        console.log(e)
+    }
+
     useEffect(() => {
         fetchFilters();
     }, [])
 
     return (
-        <Nav>
-            <h1 style={{ marginLeft: '25px' }}>Rock N Roll It</h1>
-            {/* { settingFilters && <Dropdown settingFilters={settingFilters} setData={setData} />} */}
-            {settingFilters.map((e, i) => {
-                return (
-                    <div key={e.toString()} className={'mr-4'} onClick={() => handleFilterClick(e)}>{e}</div>
-                )
-            })}
-            {/* <Link to="/admin">
-                Add
-            <button style={{ marginRight: '25px', listStyle: 'none' }} onClick={() => loginWithRedirect()}>Signin</button>
-            </Link> */}
-        </Nav>
+        <Navbar
+            collapseOnSelect
+            expand="md"
+            bg="dark"
+            variant="dark"
+        >
+            <Navbar.Brand onClick={() => console.log('title clicked')}>Rock N Roll It</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav
+                    onSelect={handleSelect}
+                    variant="pills"
+                    className="ml-auto d-flex justify-content-end"
+                >
+                    <Nav.Link
+                        eventKey={`link-${0}`}
+                        // key={e.toString()}
+                        className={'mr-4'}
+                        onClick={() => fetchAll()}
+                    >
+                        All
+                    </Nav.Link>
+                    {
+                        settingFilters.map((e, i) => {
+                            return (
+                                <Nav.Item variant="light" className="">
+                                    <Nav.Link
+                                        eventKey={`link-${i + 1}`}
+                                        key={e.toString()}
+                                        className={'mr-4'}
+                                        onClick={() => handleFilterClick(e)}
+                                    >
+                                        {e}
+                                    </Nav.Link>
+                                </Nav.Item>
+                            )
+                        })}
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
+        // <Nav>
+        // { settingFilters && <Dropdown settingFilters={settingFilters} setData={setData} />} */}
+        //     <Link to="/admin">
+        //         Add
+        //     <button style={{ marginRight: '25px', listStyle: 'none' }} onClick={() => loginWithRedirect()}>Signin</button>
+        //     </Link> 
+        // </Nav> 
     )
 }
 
-export default Navbar;
+export default NavbarComp;

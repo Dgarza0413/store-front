@@ -20,28 +20,39 @@ const SliderPage = ({ data }) => {
     const [slideIndex, setSlideIndex] = useState(0);
     const [updateCount, setUpdateCount] = useState();
 
+    console.log(updateCount)
+    console.log(slideIndex)
+
     console.log(data)
     const index = useRef()
 
+    // centerMode: true,
+    // infinite: true,
+    // centerPadding: "60px",
+    // slidesToShow: 3,
+
     const settings = {
-        dotsClass: "slick-dots slick-thumb",
-        infinite: true,
         afterChange: () => setUpdateCount({ updateCount: updateCount + 1 }),
         beforeChange: (current, next) => setSlideIndex({ slideIndex: next }),
-        lazyLoad: true,
+        infinite: true,
         slidesToShow: 4,
         slidesToScroll: 4,
-        rows: 2,
-        pauseOnHover: true,
+        slidesPerRow: 2,
+        // swipeToSlide: true,
+
+        // centerMode: true,
+        // dots: true,
+        // lazyLoad: true,
+        // slidesToShow: 3,
         responsive: [
             {
                 breakpoint: 1200,
                 settings: {
+
                     slidesToShow: 3,
                     slidesToScroll: 3,
-                    infinite: true,
-                    rows: 2,
-
+                    // infinite: true,
+                    slidesPerRow: 2
                 }
             },
             {
@@ -49,17 +60,19 @@ const SliderPage = ({ data }) => {
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,
-                    initialSlide: 2,
-                    rows: 2,
-
+                    // initialSlide: 2,
+                    slidesPerRow: 2
                 }
             },
             {
-                breakpoint: 650,
+                breakpoint: 550,
                 settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    rows: 2,
+                    className: 'center',
+                    vertical: true,
+                    verticalSwiping: true,
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    slidesPerRow: 1,
                 }
             }
         ]
@@ -77,9 +90,11 @@ const SliderPage = ({ data }) => {
                             <Suspense fallback={
                                 <div
                                     style={{
-                                        height: '500px',
-                                        width: '18rem',
-                                        backgroundColor: 'lightgray'
+                                        height: '16rem',
+                                        width: '16rem',
+                                        backgroundColor: 'lightgray',
+                                        // borderRadius: '10%'
+                                        margin: '20px'
                                     }}>
                                     <Spinner animation="grow" />
                                 </div>
@@ -89,14 +104,14 @@ const SliderPage = ({ data }) => {
                         )
                     })}
                 </Slider>
-                <input
-                    style={{ marginTop: '20px', width: '100%' }}
+                {/* <input
+                    // style={{ marginTop: '20px', width: '100%' }}
                     onChange={e => index.current.slickGoTo(e.target.value)}
                     value={undefined || slideIndex.slideIndex || 0}
                     type="range"
                     min={0}
                     max={data.length}
-                />
+                /> */}
             </div>
         </>
     );

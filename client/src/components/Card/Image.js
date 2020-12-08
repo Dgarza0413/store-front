@@ -32,7 +32,7 @@ const Image = ({ src, nicotineStrength, size, description }) => {
                 src={src || `https://picsum.photos/300/300?random=${Math.floor(Math.random() * 200) + 1}`}
                 onClick={handleOverlay}
             />
-            <div ref={ref} className="d-flex position-absolute right bottom">
+            {/* <div ref={ref} className="d-flex position-absolute right bottom">
                 <Button onClick={handleClick}>Sizes</Button>
                 <Overlay
                     show={show}
@@ -72,7 +72,7 @@ const Image = ({ src, nicotineStrength, size, description }) => {
                         </Popover.Content>
                     </Popover>
                 </Overlay>
-            </div >
+            </div > */}
         </>
     )
 }
