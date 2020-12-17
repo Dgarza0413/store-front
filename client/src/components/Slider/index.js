@@ -35,9 +35,9 @@ const SliderPage = ({ data }) => {
         afterChange: () => setUpdateCount({ updateCount: updateCount + 1 }),
         beforeChange: (current, next) => setSlideIndex({ slideIndex: next }),
         infinite: true,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        slidesPerRow: 2,
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        slidesPerRow: 3,
         // swipeToSlide: true,
 
         // centerMode: true,
@@ -45,6 +45,14 @@ const SliderPage = ({ data }) => {
         // lazyLoad: true,
         // slidesToShow: 3,
         responsive: [
+            {
+                breakpoint: 1600,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
+                    slidesPerRow: 2,
+                }
+            },
             {
                 breakpoint: 1200,
                 settings: {

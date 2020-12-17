@@ -6,8 +6,9 @@ import Navbar from '../components/Nav';
 import Icon from '../rock-n-roll-it-icon.png'
 
 export const Wrapper = styled.div`
-padding: 1% 3% 0% 0%;    
-display: flex;
+    margin: 5% 0%;
+    padding: 1% 3% 0% 0%;    
+    display: flex;
     align-items: center;
     align-content: center;
     background-image: url(${Icon});
