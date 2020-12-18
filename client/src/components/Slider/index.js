@@ -98,8 +98,8 @@ const SliderPage = ({ data }) => {
                             <Suspense fallback={
                                 <div
                                     style={{
-                                        height: '16rem',
-                                        width: '16rem',
+                                        height: '18rem',
+                                        width: '18rem',
                                         backgroundColor: 'lightgray',
                                         // borderRadius: '10%'
                                         margin: '20px'
