@@ -9,12 +9,12 @@ const index = ({ data }) => {
     return (
         <Card
             className="border-0"
-            style={{ width: '16rem', margin: 'auto', backgroundColor: 'transparent' }}>
+            style={{ width: '15rem', margin: 'auto', backgroundColor: 'transparent' }}>
             <Suspense fallback={
                 <div
                     style={{
-                        height: '16rem',
-                        width: '16rem',
+                        height: '15rem',
+                        width: '15rem',
                         backgroundColor: 'lightgray',
                         borderRadius: '50%'
                     }}>
