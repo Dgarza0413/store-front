@@ -1,19 +1,19 @@
 {
-  "short_name": "Store front",
-  "name": "Create React App Sample",
+  "short_name": "Rock N Roll It",
+  "name": "Rock N Roll It - Smoke Shop",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "rock-n-roll-it-icon-64x64.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "rock-n-roll-it-icon-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "rock-n-roll-it-icon-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
