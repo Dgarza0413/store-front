@@ -37,7 +37,7 @@ const SliderPage = ({ data }) => {
         infinite: true,
         slidesToShow: 5,
         slidesToScroll: 5,
-        slidesPerRow: 3,
+        slidesPerRow: 2,
         // swipeToSlide: true,
 
         // centerMode: true,
