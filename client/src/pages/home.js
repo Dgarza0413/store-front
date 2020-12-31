@@ -34,6 +34,7 @@ const Home = () => {
     return (
         <>
             <Navbar setData={setData} />
+            {/* <SearchForm /> */}
             <Wrapper>
                 {
                     data && <SliderPage data={data} />

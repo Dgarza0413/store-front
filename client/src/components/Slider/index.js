@@ -20,10 +20,6 @@ const SliderPage = ({ data }) => {
     const [slideIndex, setSlideIndex] = useState(0);
     const [updateCount, setUpdateCount] = useState();
 
-    console.log(updateCount)
-    console.log(slideIndex)
-
-    console.log(data)
     const index = useRef()
 
     // centerMode: true,
@@ -92,7 +88,7 @@ const SliderPage = ({ data }) => {
                 width: '100%',
                 boxSizing: 'border-box'
             }}>
-                <Slider ref={index} {...settings}>
+                <Slider style={{ margin: '3% 3% 0% 0%' }} ref={index} {...settings}>
                     {data.map((e, i) => {
                         return (
                             <Suspense fallback={
@@ -101,7 +97,7 @@ const SliderPage = ({ data }) => {
                                         height: '18rem',
                                         width: '18rem',
                                         backgroundColor: 'lightgray',
-                                        // borderRadius: '10%'
+                                        borderRadius: '10%',
                                         margin: '20px'
                                     }}>
                                     <Spinner animation="grow" />

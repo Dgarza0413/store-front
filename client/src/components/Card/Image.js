@@ -23,7 +23,9 @@ const Image = ({ src, nicotineStrength, size, description }) => {
     return (
         <>
             <div onClick={handleOverlay} className={`image-overlay ${overlay ? 'display' : ''}`}>
-                {description}
+                <div className="text-overlay">
+                    {description}
+                </div>
             </div>
             <Card.Img
                 variant="top"

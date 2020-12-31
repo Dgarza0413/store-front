@@ -93,7 +93,8 @@ app.get('/api/v1/products/unique/settings', (req, res) => {
             $group:
             {
                 _id: 0,
-                profile: { $addToSet: '$profile' }
+                profile: { $addToSet: '$profile' },
+                brand: { $addToSet: '$brand' },
             }
         }]
     )

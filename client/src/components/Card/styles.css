@@ -36,6 +36,11 @@
   color: white;
   backdrop-filter: brightness(50%);
 }
+.text-overlay {
+  display: flex;
+  height: 100%;
+  align-items: center
+}
 
 .display {
   display: initial;
