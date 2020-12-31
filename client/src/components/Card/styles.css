@@ -27,10 +27,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  width: 18rem;
-  height: 18rem;
+  /* width: 18rem; */
+  /* height: 18rem; */
+  width:100%;
+  height: 100%;
   border-radius: 50%;
-  overflow: hidden;
+  overflow: scroll;
   padding: 10% 10%;
   box-sizing: border-box;
   color: white;

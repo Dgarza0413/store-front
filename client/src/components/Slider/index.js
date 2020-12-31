@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import styled from '@emotion/styled';
 import { Image } from 'cloudinary-react';
 import Spinner from 'react-bootstrap/Spinner';
+import Card from '../Card';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -22,11 +23,6 @@ const SliderPage = ({ data }) => {
 
     const index = useRef()
 
-    // centerMode: true,
-    // infinite: true,
-    // centerPadding: "60px",
-    // slidesToShow: 3,
-
     const settings = {
         afterChange: () => setUpdateCount({ updateCount: updateCount + 1 }),
         beforeChange: (current, next) => setSlideIndex({ slideIndex: next }),
@@ -34,12 +30,6 @@ const SliderPage = ({ data }) => {
         slidesToShow: 5,
         slidesToScroll: 5,
         slidesPerRow: 2,
-        // swipeToSlide: true,
-
-        // centerMode: true,
-        // dots: true,
-        // lazyLoad: true,
-        // slidesToShow: 3,
         responsive: [
             {
                 breakpoint: 1600,
@@ -91,20 +81,7 @@ const SliderPage = ({ data }) => {
                 <Slider style={{ margin: '3% 3% 0% 0%' }} ref={index} {...settings}>
                     {data.map((e, i) => {
                         return (
-                            <Suspense fallback={
-                                <div
-                                    style={{
-                                        height: '18rem',
-                                        width: '18rem',
-                                        backgroundColor: 'lightgray',
-                                        borderRadius: '10%',
-                                        margin: '20px'
-                                    }}>
-                                    <Spinner animation="grow" />
-                                </div>
-                            }>
-                                <LazyCard key={e.uuid.toString()} data={e} />
-                            </Suspense>
+                            <Card key={e.uuid.toString()} data={e} />
                         )
                     })}
                 </Slider>

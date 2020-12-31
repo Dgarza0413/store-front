@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import styled from 'styled-components';
 import SearchForm from '../components/Form/SearchForm';
 import SliderPage from '../components/Slider';
 import Navbar from '../components/Nav';
+import View from '../components/Mobile/View';
 import Icon from '../rock-n-roll-it-icon.png'
+
+import {
+    BrowserView,
+    MobileView,
+    isBrowser,
+    isMobile
+} from "react-device-detect";
 
 export const Wrapper = styled.div`
     // margin: 5% 0%;
@@ -15,10 +24,10 @@ export const Wrapper = styled.div`
     background-image: url(${Icon});
     background-size: contain;
     background-position: center;
-    background-repeat: no-repeat;
+    // background-repeat: no-repeat;
 `
 
-const Home = () => {
+const Home = (props) => {
     const [data, setData] = useState([])
 
     const fetchAll = async () => {
@@ -27,19 +36,28 @@ const Home = () => {
         await setData(data)
     }
 
+    const handle = useFullScreenHandle();
+
     useEffect(() => {
         fetchAll()
     }, [])
 
     return (
         <>
-            <Navbar setData={setData} />
-            {/* <SearchForm /> */}
-            <Wrapper>
-                {
-                    data && <SliderPage data={data} />
-                }
-            </Wrapper>
+            <FullScreen handle={handle}>
+                <Navbar handle={handle} setData={setData} />
+                {/* <SearchForm /> */}
+                <MobileView>
+                    <View {...props} data={data} />
+                </MobileView>
+                <BrowserView>
+                    <Wrapper>
+                        {
+                            data && <SliderPage data={data} />
+                        }
+                    </Wrapper>
+                </BrowserView>
+            </FullScreen>
         </>
     )
 }

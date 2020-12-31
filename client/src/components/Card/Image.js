@@ -5,7 +5,7 @@ import Popover from 'react-bootstrap/Popover';
 import Overlay from 'react-bootstrap/Overlay';
 // import { Image } from  'cloudinary-react';
 
-const Image = ({ src, nicotineStrength, size, description }) => {
+const Image = ({ src, nicotineStrength, size, description, width, height }) => {
     const [show, setShow] = useState(false);
     const [overlay, setOverlay] = useState(false);
     const [target, setTarget] = useState(null);
@@ -29,7 +29,8 @@ const Image = ({ src, nicotineStrength, size, description }) => {
             </div>
             <Card.Img
                 variant="top"
-                style={{ height: '18rem' }}
+                // style={{ height: '18rem' }}
+                // style={{ height: '18rem' }}
                 className="rounded-circle"
                 src={src || `https://picsum.photos/300/300?random=${Math.floor(Math.random() * 200) + 1}`}
                 onClick={handleOverlay}

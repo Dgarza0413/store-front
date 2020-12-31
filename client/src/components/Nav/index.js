@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth0 } from '@auth0/auth0-react';
+import { MobileView, BrowserView } from 'react-device-detect';
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-const NavbarComp = ({ setData }) => {
+const NavbarComp = ({ setData, handle }) => {
     const [settingFilters, setSettingsFilters] = useState([])
 
     const fetchFilters = async () => {
@@ -29,6 +32,7 @@ const NavbarComp = ({ setData }) => {
         console.log(e)
     }
 
+
     useEffect(() => {
         fetchFilters();
     }, [])
@@ -48,6 +52,10 @@ const NavbarComp = ({ setData }) => {
                     variant="pills"
                     className="ml-auto d-flex justify-content-end"
                 >
+                    <BrowserView>
+                        <button onClick={handle.enter}>    Enter fullscreen
+      </button>
+                    </BrowserView>
                     <Nav.Link
                         eventKey={`link-${0}`}
                         // key={e.toString()}
