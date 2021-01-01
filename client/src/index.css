@@ -16,3 +16,7 @@ code {
 #root {
   height: 95vh;
 }
+
+html {
+  scroll-behavior: smooth;
+}

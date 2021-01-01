@@ -22,60 +22,20 @@ const Image = ({ src, nicotineStrength, size, description, width, height }) => {
 
     return (
         <>
-            <div onClick={handleOverlay} className={`image-overlay ${overlay ? 'display' : ''}`}>
+            <div
+                onClick={handleOverlay}
+                className={`image-overlay ${overlay ? 'display' : ''}`}
+            >
                 <div className="text-overlay">
                     {description}
                 </div>
             </div>
             <Card.Img
                 variant="top"
-                // style={{ height: '18rem' }}
-                // style={{ height: '18rem' }}
                 className="rounded-circle"
                 src={src || `https://picsum.photos/300/300?random=${Math.floor(Math.random() * 200) + 1}`}
                 onClick={handleOverlay}
             />
-            {/* <div ref={ref} className="d-flex position-absolute right bottom">
-                <Button onClick={handleClick}>Sizes</Button>
-                <Overlay
-                    show={show}
-                    target={target}
-                    placement="right"
-                    container={ref.current}
-                    containerPadding={20}
-                >
-                    <Popover id="popover-contained">
-                        <Popover.Title as="h3">Strength</Popover.Title>
-                        <Popover.Content>
-                            {
-                                nicotineStrength.map(e => {
-                                    return (
-                                        <div>
-                                            <strong>
-                                                {e}
-                                            </strong>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </Popover.Content>
-                        <Popover.Title as="h3">Size</Popover.Title>
-                        <Popover.Content>
-                            {
-                                size.map(e => {
-                                    return (
-                                        <div>
-                                            <strong>
-                                                {e}
-                                            </strong>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </Popover.Content>
-                    </Popover>
-                </Overlay>
-            </div > */}
         </>
     )
 }

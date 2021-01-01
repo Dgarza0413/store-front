@@ -53,7 +53,8 @@ const NavbarComp = ({ setData, handle }) => {
                     className="ml-auto d-flex justify-content-end"
                 >
                     <BrowserView>
-                        <button onClick={handle.enter}>    Enter fullscreen
+                        <button onClick={handle.enter}>
+                            Enter fullscreen
       </button>
                     </BrowserView>
                     <Nav.Link

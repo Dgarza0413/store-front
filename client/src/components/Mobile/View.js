@@ -46,6 +46,7 @@ const View = (props) => {
                     )
                 })}
             </div>
+            {/* <input type='range' /> */}
             <Button />
         </>
     )

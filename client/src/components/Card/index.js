@@ -8,17 +8,10 @@ const LazyImage = React.lazy(() => import("./Image"));
 const index = ({ data }) => {
     return (
         <Card
-            className="border-0"
-            // style={{ width: '18rem', margin: 'auto', backgroundColor: 'transparent' }}>
+            className="border-0 p-3"
             style={{ margin: 'auto', backgroundColor: 'transparent' }}>
             <Suspense fallback={
-                <div
-                    style={{
-                        // height: '18rem',
-                        // width: '18rem',
-                        // backgroundColor: 'lightgray',
-                        // borderRadius: '50%'
-                    }}>
+                <div>
                     <Spinner animation="grow" />
                 </div>
             }>
