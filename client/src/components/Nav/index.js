@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth0 } from '@auth0/auth0-react';
 import { MobileView, BrowserView } from 'react-device-detect';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExpand, faCompress } from '@fortawesome/free-solid-svg-icons'
+
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Button from 'react-bootstrap/esm/Button';
+
+import './styles.css';
 
 const NavbarComp = ({ setData, handle }) => {
     const [settingFilters, setSettingsFilters] = useState([])
+
+    console.log(handle)
 
     const fetchFilters = async () => {
         const res = await fetch(`/api/v1/products/unique/settings`);
@@ -46,17 +54,22 @@ const NavbarComp = ({ setData, handle }) => {
         >
             <Navbar.Brand onClick={() => console.log('title clicked')}>Rock N Roll It</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <div className="middle">
+                <BrowserView>
+                    <FontAwesomeIcon
+                        onClick={handle.active ? handle.exit : handle.enter}
+                        color="white"
+                        icon={handle.active ? faCompress : faExpand}
+                        size="2x"
+                    />
+                </BrowserView>
+            </div>
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav
                     onSelect={handleSelect}
                     variant="pills"
                     className="ml-auto d-flex justify-content-end"
                 >
-                    <BrowserView>
-                        <button onClick={handle.enter}>
-                            Enter fullscreen
-      </button>
-                    </BrowserView>
                     <Nav.Link
                         eventKey={`link-${0}`}
                         // key={e.toString()}

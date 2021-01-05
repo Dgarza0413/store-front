@@ -1,3 +1,10 @@
 .slick-dots {
     bottom: 30px;
 }
+
+.flex-items {
+    display: flex;
+    justify-content: right;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
