@@ -2,9 +2,15 @@
     bottom: 30px;
 }
 
+.slider-box {
+    width: 100%;
+    height: calc(100vh - 100px);
+    box-sizing: border-box;
+}
+
 .flex-items {
     display: flex;
     justify-content: right;
     flex-direction: row;
-    flex-wrap: wrap;
+    height: 100%;
 }
