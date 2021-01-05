@@ -2,6 +2,10 @@
     bottom: 30px;
 }
 
+.slider-container {
+    margin: 3% 3% 0% 0%;
+}
+
 .slider-box {
     width: 100%;
     height: calc(100vh - 100px);

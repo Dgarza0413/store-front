@@ -68,12 +68,9 @@ const SliderPage = ({ data }) => {
 
     return (
         <>
-            <div style={{
-                width: '100%',
-                boxSizing: 'border-box'
-            }}>
+            <div className="slider-box">
                 {data.length >= 8
-                    ? <Slider style={{ margin: '3% 3% 0% 0%' }} ref={index} {...settings}>
+                    ? <Slider className="slider-container" ref={index} {...settings}>
                         {data.map((e, i) => {
                             return (
                                 <Card key={e.uuid.toString()} data={e} />
