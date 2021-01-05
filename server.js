@@ -25,6 +25,7 @@ if (process.env.NODE_ENV === "production") {
 app.get('/api/v1/products', (req, res) => {
     db.Product
         .find({})
+        .sort({ brand: -1, flavor: -1 })
         .then(response => res.json(response))
         .catch(err => console.error(err))
 });
