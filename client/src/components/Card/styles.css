@@ -38,6 +38,12 @@
   color: white;
   backdrop-filter: brightness(50%);
 }
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
+
 .text-overlay {
   display: flex;
   height: 100%;
