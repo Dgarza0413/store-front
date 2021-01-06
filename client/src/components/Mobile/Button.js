@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ButtonList from './ButtonList';
 import './styles.css'
 
-const Button = () => {
+const Button = ({ setData }) => {
     const [show, setShow] = useState(false)
 
     const handleShowList = () => {
@@ -11,7 +11,7 @@ const Button = () => {
 
     return (
         <>
-            <ButtonList show={show} />
+            <ButtonList setData={setData} show={show} />
             <div
                 className="menu-button"
                 onClick={handleShowList}

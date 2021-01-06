@@ -30,6 +30,9 @@ export const Wrapper = styled.div`
 const Home = (props) => {
     const [data, setData] = useState([])
 
+    console.log(setData)
+    console.log(data)
+
     const fetchAll = async () => {
         const res = await fetch('/api/v1/products');
         const data = await res.json()
@@ -48,7 +51,7 @@ const Home = (props) => {
                 <Navbar handle={handle} setData={setData} />
                 {/* <SearchForm /> */}
                 <MobileView>
-                    <View {...props} data={data} />
+                    <View {...props} setData={setData} data={data} />
                 </MobileView>
                 <BrowserView>
                     <Wrapper>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useAuth0 } from '@auth0/auth0-react';
+// import { useAuth0 } from '@auth0/auth0-react';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExpand, faCompress } from '@fortawesome/free-solid-svg-icons'
 
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
+// import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 
 import Nav from 'react-bootstrap/Nav';
@@ -52,8 +52,7 @@ const NavbarComp = ({ setData, handle }) => {
             bg="dark"
             variant="dark"
         >
-            <Navbar.Brand onClick={() => console.log('title clicked')}>Rock N Roll It</Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Brand>Rock N Roll It</Navbar.Brand>
             <div className="middle">
                 <BrowserView>
                     <FontAwesomeIcon
@@ -64,37 +63,40 @@ const NavbarComp = ({ setData, handle }) => {
                     />
                 </BrowserView>
             </div>
-            <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav
-                    onSelect={handleSelect}
-                    variant="pills"
-                    className="ml-auto d-flex justify-content-end"
-                >
-                    <Nav.Link
-                        eventKey={`link-${0}`}
-                        // key={e.toString()}
-                        className={'mr-4'}
-                        onClick={() => fetchAll()}
+            <BrowserView>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav
+                        onSelect={handleSelect}
+                        variant="pills"
+                        className="ml-auto d-flex justify-content-end"
                     >
-                        All
+                        <Nav.Link
+                            eventKey={`link-${0}`}
+                            // key={e.toString()}
+                            className={'mr-4'}
+                            onClick={() => fetchAll()}
+                        >
+                            All
                     </Nav.Link>
-                    {
-                        settingFilters.map((e, i) => {
-                            return (
-                                <Nav.Item variant="light" className="">
-                                    <Nav.Link
-                                        eventKey={`link-${i + 1}`}
-                                        key={e.toString()}
-                                        className={'mr-4'}
-                                        onClick={() => handleFilterClick(e)}
-                                    >
-                                        {e}
-                                    </Nav.Link>
-                                </Nav.Item>
-                            )
-                        })}
-                </Nav>
-            </Navbar.Collapse>
+                        {
+                            settingFilters.map((e, i) => {
+                                return (
+                                    <Nav.Item variant="light" className="">
+                                        <Nav.Link
+                                            eventKey={`link-${i + 1}`}
+                                            key={e.toString()}
+                                            className={'mr-4'}
+                                            onClick={() => handleFilterClick(e)}
+                                        >
+                                            {e}
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                )
+                            })}
+                    </Nav>
+                </Navbar.Collapse>
+            </BrowserView>
         </Navbar>
         // <Nav>
         // { settingFilters && <Dropdown settingFilters={settingFilters} setData={setData} />} */}

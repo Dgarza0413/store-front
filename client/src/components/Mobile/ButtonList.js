@@ -18,7 +18,7 @@ const ButtonList = (props) => {
                 </div>
             </div>
             <div className="flex-align-right">
-                <SecondaryList showSecondary={showSecondary} />
+                <SecondaryList setData={props.setData} showSecondary={showSecondary} />
                 <div
                     style={{ backgroundColor: 'red' }}
                     className={`menu-button-secondary`}
