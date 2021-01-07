@@ -45,13 +45,17 @@ const Home = (props) => {
         fetchAll()
     }, [])
 
+    useEffect(() => {
+
+    }, [data])
+
     return (
         <>
             <FullScreen handle={handle}>
                 <Navbar handle={handle} setData={setData} />
                 {/* <SearchForm /> */}
                 <MobileView>
-                    <View {...props} setData={setData} data={data} />
+                    {data && <View {...props} setData={setData} data={data} />}
                 </MobileView>
                 <BrowserView>
                     <Wrapper>

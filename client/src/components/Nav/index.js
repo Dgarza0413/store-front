@@ -51,12 +51,14 @@ const NavbarComp = ({ setData, handle }) => {
             expand="md"
             bg="dark"
             variant="dark"
+            className="d-flex justify-content-between"
         >
-            <Navbar.Brand>Rock N Roll It</Navbar.Brand>
-            <div className="middle">
+            <div className="d-flex middle">
+                <Navbar.Brand>Rock N Roll It</Navbar.Brand>
                 <BrowserView>
                     <FontAwesomeIcon
                         onClick={handle.active ? handle.exit : handle.enter}
+                        // className="middle"
                         color="white"
                         icon={handle.active ? faCompress : faExpand}
                         size="2x"

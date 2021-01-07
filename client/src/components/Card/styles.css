@@ -53,6 +53,11 @@
   font-weight: 700;
 }
 
+.card-text-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
 .display {
   display: initial;
 }

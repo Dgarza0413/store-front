@@ -24,9 +24,12 @@ const index = ({ data }) => {
                     />
                 </div>
             </Suspense>
-            <Card.Title>
-                {data.flavor}
-            </Card.Title>
+            <div className="card-text-title text-center">
+                {data.brand} - {data.flavor}
+            </div>
+            {/* <Card.Title className="text-center"> */}
+            {/* </Card.Title> */}
+            {/* <Card.Text>{data.flavor}</Card.Text> */}
         </Card>
     )
 }
