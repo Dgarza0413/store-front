@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Form from 'react-bootstrap/Form';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -18,52 +20,35 @@ export const FormStyle = styled.div`
 `
 
 
-const SearchForm = () => {
+const SearchForm = (props) => {
     const [settings, setSettings] = useState([]);
-    const [search, setSearch] = useState({ brand: '', type: '', profile: '' });
-    const [searchData, setSearchData] = useState([]);
+
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         await postData(`/api/v1/products/search`, search)
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
+
+    console.log(settings)
 
     const fetchSettings = async () => {
         const res = await fetch('/api/v1/products/unique/settings')
         const data = await res.json()
-        await setSettings(data)
-    }
-
-    const postData = async (url, data) => {
-        // Default options are marked with *
-        const response = await fetch(url, {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
-        });
-        const dataRes = await response.json(); // parses JSON response into native JavaScript objects
-        await setSearchData(dataRes);
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await postData(`/api/v1/products/search`, search)
-        } catch (error) {
-            console.error(error)
-        }
+        await setSettings(data.flavors.flat())
     }
 
     const handleChange = async (e) => {
-        const { name, value } = e.target;
+        const { value } = e.target;
         try {
-            await setSearch(prev => {
-                return {
-                    ...prev,
-                    [name]: value
+            await props.setSearch(prev => {
+                if (prev.includes(value)) {
+                    return prev.filter(e => e !== value)
+                } else {
+                    return [...prev, value]
                 }
             })
         } catch (error) {
@@ -76,39 +61,75 @@ const SearchForm = () => {
     }, [])
 
     return (
-        <FormStyle>
-            <Form onSubmit={handleSubmit}>
-                <Form.Row>
+        <div className="d-flex align-items-center">
+            <Form.Group
+                className="m-0"
+                as={Col}
+                controlId="formGridCity"
+            >
+                <DropdownButton
+                    id="dropdown-basic-button"
+                    classname="bg-transparent"
+                    title={`flavor`}
+                >
                     {
-                        settings && Object
-                            .entries(settings)
-                            .map(e => {
-                                if (e[0] === '_id') {
-                                    return
-                                } else {
-                                    return (
-                                        <Form.Group key={e[0]} as={Col} controlId="formGridCity">
-                                            <Form.Control className="mt-3" as="select" defaultValue="Brand..." name={e[0]} onChange={handleChange}>
-                                                <option>{e[0]}</option>
-                                                {
-                                                    e[1] && e[1].map(e => {
-                                                        return (
-                                                            <option key={e}>{e}</option>
-                                                        )
-                                                    })
-                                                }
-                                            </Form.Control>
-                                        </Form.Group>
-                                    )
-                                }
-                            })
+                        settings.map(e => {
+                            return (
+                                <div className="d-flex align-items-center mx-3 my-2">
+                                    <input
+                                        onClick={handleChange}
+                                        type='checkbox'
+                                        name={`${e}`}
+                                    />
+                                    <label className="m-0 pl-2">{e}</label>
+                                </div>
+                            )
+                        })
                     }
-                    <Col sm="auto">
-                        <Button className="mt-3" type="submit">Search</Button>
-                    </Col>
-                </Form.Row>
-            </Form>
-        </FormStyle>
+                </DropdownButton>
+            </Form.Group>
+            {/* {
+                settings && Object
+                    .entries(settings)
+                    .map(e => {
+                        if (e[0] === '_id' || e[0] === 'profile') {
+                            return
+                        } else {
+                            return (
+                                <Form.Group
+                                    className="m-0"
+                                    key={e[0]}
+                                    as={Col}
+                                    controlId="formGridCity"
+                                >
+                                    <DropdownButton
+                                        id="dropdown-basic-button"
+                                        classname="bg-transparent"
+                                        title={`${e[0]}`}
+                                    >
+                                        {
+                                            e[1] && e[1].map(e => {
+                                                return (
+                                                    <div className="d-flex align-items-center mx-3 my-2">
+                                                        <input
+                                                            // checked
+                                                            onChange={handleChange}
+                                                            type='checkbox'
+                                                            name={`select-${e}`}
+                                                            value={e}
+                                                        />
+                                                        <label className="m-0 pl-2">{e}</label>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </DropdownButton>
+                                </Form.Group>
+                            )
+                        }
+                    })
+            } */}
+        </div>
     )
 }
 

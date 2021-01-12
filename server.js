@@ -87,7 +87,6 @@ app.post('/api/v1/product/:id', (req, res) => {
         .catch(err => console.error(err))
 })
 
-
 app.get('/api/v1/products/unique/settings', (req, res) => {
     db.Product.aggregate(
         [{
@@ -95,7 +94,7 @@ app.get('/api/v1/products/unique/settings', (req, res) => {
             {
                 _id: 0,
                 profile: { $addToSet: '$profile' },
-                brand: { $addToSet: '$brand' },
+                flavors: { $addToSet: '$flavorKeywords' },
             }
         }]
     )

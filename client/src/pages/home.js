@@ -1,61 +1,69 @@
 import React, { useState, useEffect } from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import styled from 'styled-components';
-import SearchForm from '../components/Form/SearchForm';
 import SliderPage from '../components/Slider';
 import Navbar from '../components/Nav';
 import View from '../components/Mobile/View';
-import Icon from '../rock-n-roll-it-icon.png'
+import Icon from '../rock-n-roll-it-icon.png';
+// import Icon from '../rock-n-roll-it-icon-dark.png';
 
 import {
     BrowserView,
     MobileView,
-    isBrowser,
-    isMobile
 } from "react-device-detect";
 
 export const Wrapper = styled.div`
-    // margin: 5% 0%;
     height: calc(100% - 56px);
-    // padding: 1% 3% 0% 0%;    
     display: flex;
     align-items: center;
     align-content: center;
     background-image: url(${Icon});
     background-size: contain;
     background-position: center;
-    // background-repeat: no-repeat;
 `
 
 const Home = (props) => {
     const [data, setData] = useState([])
+    const [filterData, setFilterData] = useState([])
+    const [search, setSearch] = useState([]);
 
-    console.log(setData)
+    const handle = useFullScreenHandle();
+
     console.log(data)
+    console.log(search)
+    console.log(filterData)
 
     const fetchAll = async () => {
         const res = await fetch('/api/v1/products');
         const data = await res.json()
         await setData(data)
+        await setFilterData(data)
     }
 
-    const handle = useFullScreenHandle();
 
     useEffect(() => {
         fetchAll()
     }, [])
 
-    useEffect(() => {
-
-    }, [data])
-
     return (
         <>
             <FullScreen handle={handle}>
-                <Navbar handle={handle} setData={setData} />
-                {/* <SearchForm /> */}
+                <Navbar
+                    handle={handle}
+                    search={search}
+                    setSearch={setSearch}
+                    setFilterData={setFilterData}
+                    data={data}
+                    setData={setData}
+                />
                 <MobileView>
-                    {data && <View {...props} setData={setData} data={data} />}
+                    {
+                        data && <View
+                            {...props}
+                            setData={setData}
+                            data={data}
+                        />
+                    }
                 </MobileView>
                 <BrowserView>
                     <Wrapper>
