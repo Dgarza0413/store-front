@@ -2,3 +2,21 @@
     display: flex;
     align-items: center;
 }
+
+.drop-box {
+    right: 85px;
+    max-height: 300px;
+    overflow: scroll;
+    z-index: 1;
+    border: 0.25px solid black;
+}
+
+.display {
+    display: none;
+    position: relative;
+}
+
+.show {
+    position: absolute;
+    display: block;
+}

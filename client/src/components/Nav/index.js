@@ -19,12 +19,15 @@ import './styles.css';
 const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData }) => {
     const [settingFilters, setSettingsFilters] = useState([])
     const [settings, setSettings] = useState([]);
+    const [show, setShow] = useState(false);
 
     const fetchFilters = async () => {
         const res = await fetch(`/api/v1/products/unique/settings`);
+        const flavor = await fetch(`/api/v1/products/unique/flavors`);
         const data = await res.json();
+        const flavorData = await flavor.json();
         await setSettingsFilters(data.profile);
-        await setSettings(data.flavors.flat());
+        await setSettings(flavorData);
         await setSearch([])
     }
 
@@ -105,16 +108,6 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
             <BrowserView>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
-                    {/* {show
-                        ? <SearchForm setSearch={setSearch} />
-                        : ""
-                    }
-                    <FontAwesomeIcon
-                        onClick={handleFormHide}
-                        className="mr-3"
-                        icon={faFilter}
-                        color="white"
-                    /> */}
                     <Nav
                         // onSelect={handleSelect}
                         variant="pills"
@@ -142,34 +135,34 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
                                     </Nav.Item>
                                 )
                             })}
-                        <DropdownButton
-                            id="dropdown-basic-button"
-                            style={{ backgroundColor: 'none' }}
-                            title={`flavor`}
-                            drop={'left'}
-                            menuAlign={{ lg: 'left' }}
-                        >
-                            {
-                                settings.map(e => {
-                                    return (
-                                        <div className="d-flex align-items-center mx-3 my-2">
-                                            <input
-                                                checked={search.includes(e)}
-                                                onClick={handleFilterFlavorClick}
-                                                type='checkbox'
-                                                value={e}
-                                                name={e}
-                                            />
-                                            <label className="m-0 pl-2">{e}</label>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </DropdownButton>
+                        <div>
+                            <div className={`bg-white drop-box ${show ? "show" : 'display'}`}>
+                                {
+                                    settings.map(e => {
+                                        return (
+                                            <div className={`d-flex align-items-center mx-3 my-2`}>
+                                                <input
+                                                    checked={search.includes(e)}
+                                                    onClick={handleFilterFlavorClick}
+                                                    type='checkbox'
+                                                    value={e}
+                                                    name={e}
+                                                />
+                                                <label className="m-0 pl-2">{e}</label>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                            <button className="btn btn-link" onClick={() => setShow(!show)}>Flavor</button>
+
+                        </div>
+                        {/* </Dropdown.Menu> */}
+                        {/* </DropdownButton> */}
                     </Nav>
                 </Navbar.Collapse>
             </BrowserView>
-        </Navbar>
+        </Navbar >
     )
 }
 

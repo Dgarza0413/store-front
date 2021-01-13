@@ -87,6 +87,14 @@ app.post('/api/v1/product/:id', (req, res) => {
         .catch(err => console.error(err))
 })
 
+app.get('/api/v1/products/unique/flavors', (req, res) => {
+    db.Product
+        .distinct('flavorKeywords')
+        .then(response => res.json(response))
+        .catch(err => console.error(err, "something went wrong with the flavors route"))
+
+})
+
 app.get('/api/v1/products/unique/settings', (req, res) => {
     db.Product.aggregate(
         [{
