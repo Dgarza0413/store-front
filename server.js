@@ -65,6 +65,7 @@ app.get('/api/v1/product/:id', (req, res) => {
         .catch(err => console.error(err))
 });
 
+
 app.delete('/api/v1/product/:id', (req, res) => {
     db.Product
         .findOneAndRemove({ uuid: req.params.id })
@@ -79,6 +80,19 @@ app.get('/api/v1/profile/:profile', (req, res) => {
         .catch(err => console.error(err))
 })
 
+app.get('/api/v1/profile/:profile/unique', (req, res) => {
+    if (req.params.profile === '' || req.params.profile === 'all') {
+        db.Product
+            .distinct('flavorKeywords')
+            .then(response => res.json(response))
+            .catch(err => console.error(err, "something went wrong with the flavors route"))
+    } else {
+        db.Product
+            .distinct('flavorKeywords', { "profile": req.params.profile })
+            .then(response => res.json(response))
+            .catch(err => console.error(err, "something went wrong with the flavors route"))
+    }
+})
 
 app.post('/api/v1/product/:id', (req, res) => {
     db.Product
@@ -88,6 +102,14 @@ app.post('/api/v1/product/:id', (req, res) => {
 })
 
 app.get('/api/v1/products/unique/flavors', (req, res) => {
+    let profileStr
+    if (req.params.profile === 'all') {
+        profileStr = {}
+    } else {
+        profileStr = { profile: req.params.profile || '' }
+    }
+    console.log(profileStr)
+
     db.Product
         .distinct('flavorKeywords')
         .then(response => res.json(response))

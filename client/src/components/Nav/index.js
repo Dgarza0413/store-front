@@ -34,7 +34,14 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
     const handleFilterClick = async (e) => {
         const res = await fetch(`/api/v1/profile/${e}`)
         const data = await res.json();
+
+        const flavor = await fetch(`/api/v1/profile/${e}/unique`)
+        const flavorData = await flavor.json();
+
+        console.log(flavorData)
+
         await setData(data);
+        await setSettings(flavorData);
         await setFilterData(data);
         await setSearch([])
 
@@ -43,6 +50,12 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
     const fetchAll = async () => {
         const res = await fetch('/api/v1/products');
         const data = await res.json()
+
+        const flavor = await fetch(`/api/v1/profile/all/unique`)
+        const flavorData = await flavor.json();
+
+        console.log(flavorData)
+
         await setData(data)
         await setFilterData(data);
         await setSearch([])
@@ -155,10 +168,7 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
                                 }
                             </div>
                             <button className="btn btn-link" onClick={() => setShow(!show)}>Flavor</button>
-
                         </div>
-                        {/* </Dropdown.Menu> */}
-                        {/* </DropdownButton> */}
                     </Nav>
                 </Navbar.Collapse>
             </BrowserView>

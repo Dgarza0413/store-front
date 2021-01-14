@@ -1,16 +1,12 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Popover from 'react-bootstrap/Popover';
-import Overlay from 'react-bootstrap/Overlay';
-// import { Image } from  'cloudinary-react';
 
 import "./styles.css"
 
 const Image = ({ src, description }) => {
     const [overlay, setOverlay] = useState(false);
 
-    const handleOverlay = (e) => {
+    const handleOverlay = () => {
         setOverlay(!overlay)
     }
 
