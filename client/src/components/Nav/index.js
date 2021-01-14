@@ -38,13 +38,10 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
         const flavor = await fetch(`/api/v1/profile/${e}/unique`)
         const flavorData = await flavor.json();
 
-        console.log(flavorData)
-
         await setData(data);
         await setSettings(flavorData);
         await setFilterData(data);
         await setSearch([])
-
     }
 
     const fetchAll = async () => {
@@ -54,12 +51,10 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
         const flavor = await fetch(`/api/v1/profile/all/unique`)
         const flavorData = await flavor.json();
 
-        console.log(flavorData)
-
         await setData(data)
+        await setSettings(flavorData);
         await setFilterData(data);
         await setSearch([])
-
     }
 
     const handleFilterFlavorClick = (e) => {

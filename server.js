@@ -102,14 +102,6 @@ app.post('/api/v1/product/:id', (req, res) => {
 })
 
 app.get('/api/v1/products/unique/flavors', (req, res) => {
-    let profileStr
-    if (req.params.profile === 'all') {
-        profileStr = {}
-    } else {
-        profileStr = { profile: req.params.profile || '' }
-    }
-    console.log(profileStr)
-
     db.Product
         .distinct('flavorKeywords')
         .then(response => res.json(response))
