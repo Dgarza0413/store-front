@@ -5,16 +5,10 @@ import Popover from 'react-bootstrap/Popover';
 import Overlay from 'react-bootstrap/Overlay';
 // import { Image } from  'cloudinary-react';
 
-const Image = ({ src, nicotineStrength, size, description, width, height }) => {
-    const [show, setShow] = useState(false);
-    const [overlay, setOverlay] = useState(false);
-    const [target, setTarget] = useState(null);
-    const ref = useRef(null);
+import "./styles.css"
 
-    const handleClick = (event) => {
-        setShow(!show);
-        setTarget(event.target);
-    };
+const Image = ({ src, description }) => {
+    const [overlay, setOverlay] = useState(false);
 
     const handleOverlay = (e) => {
         setOverlay(!overlay)
@@ -24,7 +18,7 @@ const Image = ({ src, nicotineStrength, size, description, width, height }) => {
         <>
             <div
                 onClick={handleOverlay}
-                className={`image-overlay ${overlay ? 'display' : ''}`}
+                className={`image-overlay ${overlay ? '' : 'display'}`}
             >
                 <div className="text-overlay">
                     {description}
