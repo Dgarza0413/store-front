@@ -29,10 +29,6 @@ const Home = (props) => {
 
     const handle = useFullScreenHandle();
 
-    console.log(data)
-    console.log(search)
-    console.log(filterData)
-
     const fetchAll = async () => {
         const res = await fetch('/api/v1/products');
         const data = await res.json()
@@ -68,7 +64,7 @@ const Home = (props) => {
                 <BrowserView>
                     <Wrapper>
                         {
-                            data && <SliderPage data={data} />
+                            data && <SliderPage data={filterData} />
                         }
                     </Wrapper>
                 </BrowserView>

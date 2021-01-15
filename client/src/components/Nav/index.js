@@ -82,7 +82,7 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
             })
             setFilterData(filterValue.flat())
         } else {
-            return
+            setFilterData(data)
         }
     }
 
