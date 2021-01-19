@@ -61,3 +61,7 @@
 .display {
   display: none;
 }
+
+.defined-width {
+  width: 300px;
+}

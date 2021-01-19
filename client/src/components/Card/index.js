@@ -5,10 +5,11 @@ import Spinner from 'react-bootstrap/Spinner';
 import './styles.css';
 const LazyImage = React.lazy(() => import("./Image"));
 
-const index = ({ data }) => {
+const index = ({ data, stylename }) => {
+    console.log(stylename)
     return (
         <Card
-            className="border-0 p-3"
+            className={`border-0 p-3 ${stylename}`}
             style={{ margin: 'auto', backgroundColor: 'transparent' }}>
             <Suspense fallback={
                 <div>
