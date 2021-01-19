@@ -74,7 +74,14 @@ const NavbarComp = ({ data, setData, handle, search, searchType, setSearch, setS
     }
 
     const handleFilterValue = () => {
-        if (search.length > 0) {
+        if (search.length <= 0) {
+            const filtertype = data.filter(v => {
+                return (
+                    v["type"].match(searchType)
+                )
+            })
+            setFilterData(filtertype)
+        } else if (search.length > 0) {
             const filterValue = search.map(v => {
                 return (
                     data.filter(e => {
@@ -86,6 +93,7 @@ const NavbarComp = ({ data, setData, handle, search, searchType, setSearch, setS
                 )
             })
             setFilterData(filterValue.flat())
+
         } else {
             setFilterData(data)
         }
