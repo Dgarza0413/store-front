@@ -80,7 +80,7 @@ const SliderPage = ({ data }) => {
                     : <div className="flex-items">
                         {data.map((e, i) => {
                             return (
-                                <Card key={e.uuid.toString()} data={e} />
+                                <Card style={{ width: '18rem' }} key={e.uuid.toString()} data={e} />
                             )
                         })}
                     </div>

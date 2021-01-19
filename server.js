@@ -106,7 +106,13 @@ app.get('/api/v1/products/unique/flavors', (req, res) => {
         .distinct('flavorKeywords')
         .then(response => res.json(response))
         .catch(err => console.error(err, "something went wrong with the flavors route"))
+})
 
+app.get('/api/v1/products/unique/type', (req, res) => {
+    db.Product
+        .distinct('type')
+        .then(response => res.json(response))
+        .catch(err => console.error(err, "something went wrong with the type route"))
 })
 
 app.get('/api/v1/products/unique/settings', (req, res) => {

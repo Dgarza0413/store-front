@@ -4,8 +4,9 @@ import { MobileView, BrowserView } from 'react-device-detect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExpand, faCompress, faFilter } from '@fortawesome/free-solid-svg-icons';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
+// import Dropdown from 'react-bootstrap/Dropdown';
 import SearchForm from '../Form/SearchForm';
+import Dropdown from '../Dropdown/Dropdown';
 
 // import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
@@ -19,25 +20,29 @@ import './styles.css';
 const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData }) => {
     const [settingFilters, setSettingsFilters] = useState([])
     const [settings, setSettings] = useState([]);
+    const [types, setTypes] = useState([]);
     const [show, setShow] = useState(false);
+    const [showType, setShowType] = useState(false);
+
 
     const fetchFilters = async () => {
         const res = await fetch(`/api/v1/products/unique/settings`);
         const flavor = await fetch(`/api/v1/products/unique/flavors`);
+        const type = await fetch('/api/v1/products/unique/type');
         const data = await res.json();
         const flavorData = await flavor.json();
+        const typeData = await type.json();
         await setSettingsFilters(data.profile);
+        await setTypes(typeData);
         await setSettings(flavorData);
         await setSearch([])
     }
 
     const handleFilterClick = async (e) => {
         const res = await fetch(`/api/v1/profile/${e}`)
-        const data = await res.json();
-
         const flavor = await fetch(`/api/v1/profile/${e}/unique`)
+        const data = await res.json();
         const flavorData = await flavor.json();
-
         await setData(data);
         await setSettings(flavorData);
         await setFilterData(data);
@@ -73,7 +78,7 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
             const filterValue = search.map(v => {
                 return (
                     data.filter(e => {
-                        const combine = e['flavorKeywords'].join(" ") || []
+                        const combine = ((e['flavorKeywords'].join(" ") || e['type'] || []))
                         return (
                             combine.includes(v)
                         )
@@ -143,7 +148,9 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
                                     </Nav.Item>
                                 )
                             })}
-                        <div>
+
+                        <Dropdown />
+                        <div className="relative">
                             <div className={`bg-white drop-box ${show ? "show" : 'display'}`}>
                                 {
                                     settings.map(e => {
@@ -163,6 +170,27 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
                                 }
                             </div>
                             <button className="btn btn-link" onClick={() => setShow(!show)}>Flavor</button>
+                        </div>
+                        <div className="relative">
+                            <div className={`bg-white drop-box ${showType ? "show" : 'display'}`}>
+                                {
+                                    types.map(e => {
+                                        return (
+                                            <div className={`d-flex align-items-center mx-3 my-2`}>
+                                                <input
+                                                    checked={search.includes(e)}
+                                                    onClick={handleFilterFlavorClick}
+                                                    type='checkbox'
+                                                    value={e}
+                                                    name={e}
+                                                />
+                                                <label className="m-0 pl-2">{e}</label>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                            <button className="btn btn-link" onClick={() => setShowType(!showType)}>Type</button>
                         </div>
                     </Nav>
                 </Navbar.Collapse>

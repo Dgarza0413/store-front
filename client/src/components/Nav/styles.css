@@ -20,3 +20,7 @@
     position: absolute;
     display: block;
 }
+
+.relative {
+    position: relative;
+}
