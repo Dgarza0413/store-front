@@ -1,23 +1,14 @@
 import React, { useState, useEffect } from 'react'
-// import { useAuth0 } from '@auth0/auth0-react';
-import { MobileView, BrowserView } from 'react-device-detect';
+import { BrowserView } from 'react-device-detect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExpand, faCompress, faFilter } from '@fortawesome/free-solid-svg-icons';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-// import Dropdown from 'react-bootstrap/Dropdown';
-import SearchForm from '../Form/SearchForm';
+import { faExpand, faCompress } from '@fortawesome/free-solid-svg-icons';
 import Dropdown from '../Dropdown/Dropdown';
-
-// import { FullScreen, useFullScreenHandle } from "react-full-screen";
-
-
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/esm/Button';
 
 import './styles.css';
 
-const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData }) => {
+const NavbarComp = ({ data, setData, handle, search, searchType, setSearch, setSearchType, setFilterData }) => {
     const [settingFilters, setSettingsFilters] = useState([])
     const [settings, setSettings] = useState([]);
     const [types, setTypes] = useState([]);
@@ -73,14 +64,23 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
         })
     }
 
+    const handleFilterTypeCheck = (e) => {
+        const { value } = e.target
+        if (searchType === value) {
+            setSearchType("")
+        } else {
+            setSearchType(value)
+        }
+    }
+
     const handleFilterValue = () => {
         if (search.length > 0) {
             const filterValue = search.map(v => {
                 return (
                     data.filter(e => {
-                        const combine = ((e['flavorKeywords'].join(" ") || e['type'] || []))
+                        const combine = e['flavorKeywords'].join(" ") || [];
                         return (
-                            combine.includes(v)
+                            combine.includes(v) && e["type"].match(searchType)
                         )
                     })
                 )
@@ -97,7 +97,7 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
 
     useEffect(() => {
         handleFilterValue()
-    }, [search])
+    }, [search, searchType])
 
     return (
         <Navbar
@@ -178,8 +178,8 @@ const NavbarComp = ({ data, setData, handle, search, setSearch, setFilterData })
                                         return (
                                             <div className={`d-flex align-items-center mx-3 my-2`}>
                                                 <input
-                                                    checked={search.includes(e)}
-                                                    onClick={handleFilterFlavorClick}
+                                                    checked={searchType === e}
+                                                    onClick={handleFilterTypeCheck}
                                                     type='checkbox'
                                                     value={e}
                                                     name={e}

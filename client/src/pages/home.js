@@ -14,9 +14,10 @@ const Home = (props) => {
     const [data, setData] = useState([])
     const [filterData, setFilterData] = useState([])
     const [search, setSearch] = useState([]);
+    const [searchType, setSearchType] = useState("")
 
-    console.log(search)
-    console.log(filterData)
+    console.log(searchType)
+    console.log(filterData);
 
     const handle = useFullScreenHandle();
 
@@ -39,6 +40,8 @@ const Home = (props) => {
                     handle={handle}
                     search={search}
                     setSearch={setSearch}
+                    searchType={searchType}
+                    setSearchType={setSearchType}
                     setFilterData={setFilterData}
                     data={data}
                     setData={setData}
