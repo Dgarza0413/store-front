@@ -1,14 +1,15 @@
-const path = require('path');
 const express = require('express');
-const Sharp = require('sharp');
+const app = express();
 const compression = require('compression');
 const cors = require('cors');
-const mongoose = require('mongoose');
-const db = require("./models");
-const app = express();
+const routes = require("./routes");
 const PORT = process.env.PORT || 3001;
 
+const morgan = require("morgan");
+
 const databaseConfig = require('./utils/db');
+
+app.use(morgan("dev"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -19,129 +20,12 @@ databaseConfig();
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client/build"));
+    app.use(express.static("./client/build"));
 }
 
-app.get('/api/v1/products', (req, res) => {
-    db.Product
-        .find({})
-        .sort({ brand: -1, flavor: -1 })
-        .then(response => res.json(response))
-        .catch(err => console.error(err))
-});
-
-app.get('/api/v1/products/table/length', (req, res) => {
-    db.Product
-        .count()
-        .then(response => res.json(response))
-        .catch(err => console.error(err))
-});
-
-app.get('/api/v1/products/table', (req, res) => {
-    db.Product
-        .find()
-        // .skip(req.params)
-        .limit(10)
-        .then(response => res.json(response))
-        .catch(err => console.error(err))
-});
-
-app.get('/api/v1/products/:page', (req, res) => {
-    const { page } = req.params
-    const skip = page * 10
-    db.Product
-        .find()
-        .skip(skip)
-        .limit(10)
-        .then(response => res.json(response))
-        .catch(err => console.error(err))
-});
-
-
-app.get('/api/v1/product/:id', (req, res) => {
-    db.Product
-        .findOne({ uuid: req.params.id })
-        .then(response => res.json(response))
-        .catch(err => console.error(err))
-});
-
-
-app.delete('/api/v1/product/:id', (req, res) => {
-    db.Product
-        .findOneAndRemove({ uuid: req.params.id })
-        .then(response => res.status(200).send("delete request complete"))
-        .catch(err => console.error(err))
-})
-
-app.get('/api/v1/profile/:profile', (req, res) => {
-    db.Product
-        .find({ profile: { $all: [req.params.profile] } })
-        .then(response => res.json(response))
-        .catch(err => console.error(err))
-})
-
-app.get('/api/v1/profile/:profile/unique', (req, res) => {
-    if (req.params.profile === '' || req.params.profile === 'all') {
-        db.Product
-            .distinct('flavorKeywords')
-            .then(response => res.json(response))
-            .catch(err => console.error(err, "something went wrong with the flavors route"))
-    } else {
-        db.Product
-            .distinct('flavorKeywords', { "profile": req.params.profile })
-            .then(response => res.json(response))
-            .catch(err => console.error(err, "something went wrong with the flavors route"))
-    }
-})
-
-app.post('/api/v1/product/:id', (req, res) => {
-    db.Product
-        .findOneAndUpdate({ uuid: req.params.id }, req.body)
-        .then(response => res.json(response))
-        .catch(err => console.error(err))
-})
-
-app.get('/api/v1/products/unique/flavors', (req, res) => {
-    db.Product
-        .distinct('flavorKeywords')
-        .then(response => res.json(response))
-        .catch(err => console.error(err, "something went wrong with the flavors route"))
-})
-
-app.get('/api/v1/products/unique/type', (req, res) => {
-    db.Product
-        .distinct('type')
-        .then(response => res.json(response))
-        .catch(err => console.error(err, "something went wrong with the type route"))
-})
-
-app.get('/api/v1/products/unique/settings', (req, res) => {
-    db.Product.aggregate(
-        [{
-            $group:
-            {
-                _id: 0,
-                profile: { $addToSet: '$profile' },
-                flavors: { $addToSet: '$flavorKeywords' },
-            }
-        }]
-    )
-        .then(response => res.json(response[0]))
-        .catch(err => console.error(err))
-})
-
-app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
+app.use(routes)
 
 // Start the API server
 app.listen(PORT, () => {
     console.log(`🌎  ==> API Server now listening on ${PORT}`);
 });
-
-process.on('SIGINT', () => {
-    mongoose.connection.close().then(() => {
-        console.log("Mongoose disconnected");
-        process.exit(0);
-    })
-})

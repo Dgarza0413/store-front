@@ -6,8 +6,8 @@ const Body = ({ data }) => {
         <tbody>
             {data && data.map(e => {
                 return (
-                    <tr>
-                        {Object.entries(e).map(e => {
+                    <tr key={e?.uuid}>
+                        {Object.entries(e).map((e, i) => {
                             if (
                                 e[0] === "description" ||
                                 e[0] === "__v" ||
@@ -20,23 +20,25 @@ const Body = ({ data }) => {
                                 return
                             } else if (e[0] === "uuid") {
                                 return (
-                                    <Link to={`/admin/product/${e[1]}`}>
-                                        {e[1]}
-                                    </Link>
+                                    <td key={i}>
+                                        <Link to={`/admin/product/${e[1]}`}>
+                                            {e[1]}
+                                        </Link>
+                                    </td>
                                 )
                             } else if (e[0] === "pictureURI") {
                                 return (
-                                    <div>
+                                    <td key={i}>
                                         {
                                             e[1] === ""
                                                 ? "no uri"
                                                 : "uri exists"
                                         }
-                                    </div>
+                                    </td>
                                 )
                             } else {
                                 return (
-                                    <td className="text-nowrap">
+                                    <td key={i} className="text-nowrap">
                                         {e[1]}
                                     </td>
                                 )

@@ -1,44 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import Table from '../components/Table';
-import Paginate from '../components/Paginate';
-import Navbar from '../components/Nav';
+import Paginate from '../components/Table/utils/Paginate';
+
+import useFetch from '../hooks/useFetch';
 
 const Admin = (props) => {
-    const [data, setData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
-
-    const fetchAll = async () => {
-        const res = await fetch('/api/v1/products/table');
-        const data = await res.json()
-        await setData(data)
-    }
-
-    const fetchCurrentPage = async () => {
-        const res = await fetch(`/api/v1/products/${currentPage}`);
-        const data = await res.json()
-        await setData(data)
-    }
+    const [response, isLoading, error, handleGetFetch] = useFetch();
 
     useEffect(() => {
-        fetchAll()
+        handleGetFetch(`/api/v1/table/page/${currentPage}`);
     }, [])
 
     useEffect(() => {
-        fetchCurrentPage()
+        handleGetFetch(`/api/v1/table/page/${currentPage}`);
     }, [currentPage])
 
+    if (isLoading) {
+        return <div>loading...</div>
+    }
+
     return (
-        <>
-            <Navbar />
+        <div className="container">
             <Table
                 pageId={props.match.params.id}
-                data={data}
+                data={response}
             />
             <Paginate
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
             />
-        </>
+        </div>
     )
 }
 

@@ -1,30 +1,25 @@
 import React, { useState } from 'react'
-import Card from 'react-bootstrap/Card';
-
+import { isMobile } from 'react-device-detect';
 import "./styles.css"
 
-const Image = ({ src, description }) => {
+const Image = ({ src, description, brand, flavor }) => {
     const [overlay, setOverlay] = useState(false);
 
-    const handleOverlay = () => {
-        setOverlay(!overlay)
-    }
 
     return (
         <>
             <div
-                onClick={handleOverlay}
-                className={`image-overlay ${overlay ? '' : 'display'}`}
+                onClick={() => setOverlay(!overlay)}
+                className={`${overlay ? '' : 'display'} ${isMobile ? "image-overlay-mobile" : "image-overlay"}`}
             >
-                <div className="text-overlay">
+                <p className={`${isMobile ? "text-overlay-mobile" : "text-overlay"}`}>
                     {description}
-                </div>
+                </p>
             </div>
-            <Card.Img
-                variant="top"
-                className="rounded-circle"
+            <img
+                className={`${isMobile ? "image-size-mobile" : "image-size"} rounded-circle margin-auto`}
                 src={src || `https://picsum.photos/300/300?random=${Math.floor(Math.random() * 200) + 1}`}
-                onClick={handleOverlay}
+                onClick={() => setOverlay(!overlay)}
             />
         </>
     )

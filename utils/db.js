@@ -13,6 +13,13 @@ const databaseConfig = function () {
     mongoose.connection.once('open', function () {
         console.log('connection successful')
     })
+
+    process.on('SIGINT', () => {
+        mongoose.connection.close().then(() => {
+            console.log("Mongoose disconnected");
+            process.exit(0);
+        })
+    })
 }
 
 module.exports = databaseConfig

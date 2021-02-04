@@ -6,7 +6,7 @@ import Table from 'react-bootstrap/Table';
 
 const index = ({ data }) => {
     return (
-        <Table responsive striped bordered hover size="sm">
+        <Table responsive striped bordered hover size="md">
             {
                 data && <>
                     <Header data={data[0]} />

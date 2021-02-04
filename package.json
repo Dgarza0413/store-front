@@ -20,18 +20,18 @@
   "author": "David Garza <dgarza0413@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@fast-csv/parse": "^4.3.2",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "faker": "^5.1.0",
-    "fast-csv": "^4.3.2",
     "mongoose": "^5.10.6",
-    "sharp": "^0.25.4",
+    "sass": "^1.32.6",
     "shortid": "^2.2.15"
   },
   "devDependencies": {
-    "concurrently": "^5.2.0"
+    "concurrently": "^5.2.0",
+    "faker": "^5.2.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7"
   },
   "repository": "git@github.com:Dgarza0413/store-front.git"
 }

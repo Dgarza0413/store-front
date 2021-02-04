@@ -1,0 +1,8 @@
+.menu-button-secondary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-radius: 50%;
+    width: fit-content;
+}

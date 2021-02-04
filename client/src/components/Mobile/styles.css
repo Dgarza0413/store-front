@@ -1,9 +1,6 @@
 .grid {
     display: grid;
     align-items: stretch;
-    /* margin: 0% 5%; */
-    padding: 0% 5%;
-    gap: 15px 10px;
     box-sizing: border-box;
 }
 
@@ -16,7 +13,7 @@
 }
 
 .menu-button {
-    position: sticky;
+    position: fixed;
     position: -webkit-sticky;
     display: flex;
     justify-content: center;
@@ -64,7 +61,9 @@
 }
 
 .menu-button-list {
-    position: sticky;
+    position: fixed;
+    right: 2px;
+    bottom: 70px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

@@ -10,6 +10,8 @@ const SecondaryList = ({ showSecondary, setData }) => {
         await setData(data);
     }
 
+    const icons = ["faIceCream", "faLeaf", "faSnowflake", "faAppleAlt"];
+
     return (
         <div className={`secondary-list ${showSecondary ? "display" : "display-none"}`}>
             <div

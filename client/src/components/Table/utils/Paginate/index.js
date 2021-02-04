@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Pagination from 'react-bootstrap/Pagination';
 
 
 const Paginate = ({ currentPage, setCurrentPage }) => {
     const [paginateLength, setPaginateLength] = useState();
-    const [active, setActive] = useState(1);
+    const [range, setRange] = useState([]);
+    // const [active, setActive] = useState(1);
+
+    const history = useHistory();
 
     const pages = Math.floor(paginateLength / 10)
 
     const fetchCollectionLength = async () => {
-        const res = await fetch('/api/v1/products/table/length');
+        const res = await fetch('/api/v1/table/length');
         const data = await res.json(res)
         await setPaginateLength(data)
     }
@@ -33,9 +37,22 @@ const Paginate = ({ currentPage, setCurrentPage }) => {
         }
     }
 
+    // const createRange = () => {
+    //     const increment = [...new Array(currentPage)];
+    //     if (currentPage <= 3) {
+    //         setRange([...new Array(3)]);
+    //     } else if (currentPage > 3 && currentPage < pages) {
+    //         setRange([...new Array(currentPage)]);
+    //     }
+    // }
+
     useEffect(() => {
         fetchCollectionLength()
     }, [])
+
+    useEffect(() => {
+        history.push(`/admin/page/${currentPage}`)
+    }, [currentPage])
 
     return (
         <>
@@ -43,17 +60,12 @@ const Paginate = ({ currentPage, setCurrentPage }) => {
             <Pagination className='justify-content-center text-wrap'>
                 <Pagination.First disabled={currentPage === 1} onClick={() => handleCurrentPage("first")} />
                 <Pagination.Prev disabled={currentPage === 1} onClick={() => handleCurrentPage("decrement")} />
-                {/* <Pagination.Item>{1}</Pagination.Item>
-            <Pagination.Ellipsis />
+                {range.map((e, i) => {
+                    return (
+                        <Pagination.Item>{i + 1}</Pagination.Item>
+                    )
+                })}
 
-            <Pagination.Item>{10}</Pagination.Item>
-            <Pagination.Item>{11}</Pagination.Item>
-            <Pagination.Item active>{12}</Pagination.Item>
-            <Pagination.Item>{13}</Pagination.Item>
-            <Pagination.Item disabled>{14}</Pagination.Item>
-
-            <Pagination.Ellipsis />
-            <Pagination.Item>{20}</Pagination.Item> */}
                 <Pagination.Next disabled={currentPage === pages} onClick={() => handleCurrentPage("increment")} />
                 <Pagination.Last disabled={currentPage === pages} onClick={() => handleCurrentPage("last")} />
             </Pagination>

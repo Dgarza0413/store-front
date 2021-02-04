@@ -5,18 +5,19 @@ import homePage from './pages/home';
 import adminPage from './pages/admin';
 import detailPage from './pages/detail';
 
-// import Navbar from './components/Nav';
+import { SearchProvider } from './utils/searchContext';
 
 const App = () => {
   return (
-    <Router>
-      {/* <Navbar /> */}
-      <Switch>
-        <Route exact path="/" component={homePage} />
-        <Route exact path="/admin" component={adminPage} />
-        <Route exact path='/admin/product/:id' component={detailPage} />
-      </Switch>
-    </Router>
+    <SearchProvider>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={homePage} />
+          <Route exact path={["/admin", "/admin/page/:pageNumber"]} component={adminPage} />
+          <Route exact path='/admin/product/:id' component={detailPage} />
+        </Switch>
+      </Router>
+    </SearchProvider>
   );
 }
 

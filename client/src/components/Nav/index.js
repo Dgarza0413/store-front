@@ -2,55 +2,41 @@ import React, { useState, useEffect } from 'react'
 import { BrowserView } from 'react-device-detect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExpand, faCompress } from '@fortawesome/free-solid-svg-icons';
-import Dropdown from '../Dropdown/Dropdown';
+import Dropdown from '../Button/Browser/Dropdown';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
+import useFetch from "../../hooks/useFetch";
 import './styles.css';
 
-const NavbarComp = ({ data, setData, handle, search, searchType, setSearch, setSearchType, setFilterData }) => {
-    const [settingFilters, setSettingsFilters] = useState([])
-    const [settings, setSettings] = useState([]);
-    const [types, setTypes] = useState([]);
+// search, searchType,
+// setSearch, setSearchType 
+const NavbarComp = ({ data, setData, handle, setFilterData }) => {
     const [show, setShow] = useState(false);
     const [showType, setShowType] = useState(false);
+    const [search, setSearch] = useState([]);
+    const [searchType, setSearchType] = useState("");
 
-
-    const fetchFilters = async () => {
-        const res = await fetch(`/api/v1/products/unique/settings`);
-        const flavor = await fetch(`/api/v1/products/unique/flavors`);
-        const type = await fetch('/api/v1/products/unique/type');
-        const data = await res.json();
-        const flavorData = await flavor.json();
-        const typeData = await type.json();
-        await setSettingsFilters(data.profile);
-        await setTypes(typeData);
-        await setSettings(flavorData);
-        await setSearch([])
-    }
+    const [response, isLoading, error, handleGetFetch, handlePostFetch, handleManyGetFetch] = useFetch();
 
     const handleFilterClick = async (e) => {
+        await handleGetFetch(`/api/v1/products/unique/settings/${e}`)
         const res = await fetch(`/api/v1/profile/${e}`)
-        const flavor = await fetch(`/api/v1/profile/${e}/unique`)
         const data = await res.json();
-        const flavorData = await flavor.json();
         await setData(data);
-        await setSettings(flavorData);
         await setFilterData(data);
         await setSearch([])
+        await setSearchType("")
     }
 
     const fetchAll = async () => {
+        await handleGetFetch(`/api/v1/products/unique/settings`);
         const res = await fetch('/api/v1/products');
         const data = await res.json()
-
-        const flavor = await fetch(`/api/v1/profile/all/unique`)
-        const flavorData = await flavor.json();
-
         await setData(data)
-        await setSettings(flavorData);
         await setFilterData(data);
         await setSearch([])
+        await setSearchType("")
     }
 
     const handleFilterFlavorClick = (e) => {
@@ -93,14 +79,13 @@ const NavbarComp = ({ data, setData, handle, search, searchType, setSearch, setS
                 )
             })
             setFilterData(filterValue.flat())
-
         } else {
             setFilterData(data)
         }
     }
 
     useEffect(() => {
-        fetchFilters();
+        handleGetFetch('/api/v1/products/unique/settings')
     }, [])
 
     useEffect(() => {
@@ -130,7 +115,6 @@ const NavbarComp = ({ data, setData, handle, search, searchType, setSearch, setS
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav
-                        // onSelect={handleSelect}
                         variant="pills"
                         className="ml-auto d-flex justify-content-end"
                     >
@@ -142,12 +126,11 @@ const NavbarComp = ({ data, setData, handle, search, searchType, setSearch, setS
                             All
                     </Nav.Link>
                         {
-                            settingFilters.map((e, i) => {
+                            response?.profiles?.map((e, i) => {
                                 return (
-                                    <Nav.Item variant="light" className="">
+                                    <Nav.Item key={e.toString()} variant="light">
                                         <Nav.Link
                                             eventKey={`link-${i + 1}`}
-                                            key={e.toString()}
                                             className={'mr-4'}
                                             onClick={() => handleFilterClick(e)}
                                         >
@@ -155,51 +138,29 @@ const NavbarComp = ({ data, setData, handle, search, searchType, setSearch, setS
                                         </Nav.Link>
                                     </Nav.Item>
                                 )
-                            })}
+                            })
+                        }
 
-                        <Dropdown />
-                        <div className="relative">
-                            <div className={`bg-white drop-box ${show ? "show" : 'display'}`}>
-                                {
-                                    settings.map(e => {
-                                        return (
-                                            <div className={`d-flex align-items-center mx-3 my-2`}>
-                                                <input
-                                                    checked={search.includes(e)}
-                                                    onClick={handleFilterFlavorClick}
-                                                    type='checkbox'
-                                                    value={e}
-                                                    name={e}
-                                                />
-                                                <label className="m-0 pl-2">{e}</label>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                            <button className="btn btn-link" onClick={() => setShow(!show)}>Flavor</button>
-                        </div>
-                        <div className="relative">
-                            <div className={`bg-white drop-box ${showType ? "show" : 'display'}`}>
-                                {
-                                    types.map(e => {
-                                        return (
-                                            <div className={`d-flex align-items-center mx-3 my-2`}>
-                                                <input
-                                                    checked={searchType === e}
-                                                    onClick={handleFilterTypeCheck}
-                                                    type='checkbox'
-                                                    value={e}
-                                                    name={e}
-                                                />
-                                                <label className="m-0 pl-2">{e}</label>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                            <button className="btn btn-link" onClick={() => setShowType(!showType)}>Type</button>
-                        </div>
+                        {
+                            response && <>
+                                <Dropdown
+                                    title={"Flavor"}
+                                    data={response?.flavors}
+                                    search={search}
+                                    show={show}
+                                    setShow={setShow}
+                                    handleFilterFlavorClick={handleFilterFlavorClick}
+                                />
+                                <Dropdown
+                                    title={"Type"}
+                                    data={response?.type}
+                                    searchType={searchType}
+                                    show={showType}
+                                    setShow={setShowType}
+                                    handleFilterTypeCheck={handleFilterTypeCheck}
+                                />
+                            </>
+                        }
                     </Nav>
                 </Navbar.Collapse>
             </BrowserView>

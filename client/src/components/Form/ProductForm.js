@@ -5,8 +5,13 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import useFetch from '../../hooks/useFetch';
+import useInputChange from '../../hooks/useInputChange';
+
 const ProductForm = ({ data, setData }) => {
-    console.log(data)
+    const [response, isLoading, error, handleGetFetch, handlePostFetch] = useFetch();
+    const [value, handleInputChange] = useInputChange();
+
     let history = useHistory();
 
     const postData = async (url, data) => {
@@ -27,24 +32,10 @@ const ProductForm = ({ data, setData }) => {
         return response.json(); // parses JSON response into native JavaScript objects
     }
 
-    const handleChange = (e) => {
-        const { value, name } = e.target
-        setData(prev => {
-            return {
-                ...prev,
-                [name]: value
-            }
-        })
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await postData(`/api/v1/product/${data.uuid}`, {
-                ...data,
-                // size: data.size.split(",") || [],
-                // nicotineStrength: data.nicotineStrength.split(",") || []
-            })
+            await postData(`/api/v1/product/${data.uuid}`, { ...data })
         } catch (error) {
             console.error(error)
         } finally {
@@ -101,7 +92,7 @@ const ProductForm = ({ data, setData }) => {
                                                 <Form.Control
                                                     name={e[0]}
                                                     value={e[1]}
-                                                    onChange={handleChange}
+                                                    onChange={handleInputChange}
                                                     as="textarea"
                                                     rows="5"
                                                 />
@@ -117,7 +108,7 @@ const ProductForm = ({ data, setData }) => {
                                                     readOnly
                                                     name={e[0]}
                                                     value={e[1]}
-                                                    onChange={handleChange}
+                                                    onChange={handleInputChange}
                                                 />
                                             </Form.Group>
                                         </Col>
@@ -130,7 +121,7 @@ const ProductForm = ({ data, setData }) => {
                                                 <Form.Control
                                                     name={e[0]}
                                                     value={e[1]}
-                                                    onChange={handleChange}
+                                                    onChange={handleInputChange}
                                                     placeholder={`${e[0]}`}
                                                 />
                                             </Form.Group>

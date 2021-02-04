@@ -23,31 +23,45 @@ const useFetch = () => {
 
     const handleGetFetch = async (url, payload) => {
         try {
-            setIsLoading(true)
+            await setIsLoading(true)
             const res = await fetch(url, payload);
             const data = await res.json();
-            return setResponse(data, { msg: "Get was successful" })
+            return setResponse(data)
         } catch (error) {
             await setError({ error: error, msg: 'something went wrong with fetch' })
         } finally {
-            setIsLoading(false)
+            await setIsLoading(false)
         }
     }
 
     const handlePostFetch = async (url, payload) => {
         try {
-            setIsLoading(true)
+            await setIsLoading(true)
             const res = await postFetch(url, payload);
             await setResponse(res, { msg: "Post was successful" });
             return res
         } catch (error) {
             await setError({ error: error, msg: "error has occurred with posting data" })
         } finally {
-            setIsLoading(false)
+            await setIsLoading(false)
         }
     }
 
-    return [response, isLoading, error, handleGetFetch, handlePostFetch]
+    const handleManyGetFetch = async (urls, payload) => {
+        try {
+            await setIsLoading(true)
+            const res = await Promise.all(urls.map(e => fetch(e)))
+            const data = await Promise.all(res.map(e => e.json()))
+            await setResponse(data)
+            return data;
+        } catch (error) {
+            await setError({ error: error, msg: "error has occurred with get data" })
+        } finally {
+            await setIsLoading(false)
+        }
+    }
+
+    return [response, isLoading, error, handleGetFetch, handlePostFetch, handleManyGetFetch]
 }
 
 export default useFetch

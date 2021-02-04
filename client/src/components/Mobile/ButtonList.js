@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Search, Filter, Home } from 'react-feather';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter, faSearch, faHome } from '@fortawesome/free-solid-svg-icons'
 import SecondaryList from './SecondaryList';
