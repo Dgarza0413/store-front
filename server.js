@@ -5,11 +5,11 @@ const cors = require('cors');
 const routes = require("./routes");
 const PORT = process.env.PORT || 3001;
 
-const morgan = require("morgan");
+// const morgan = require("morgan");
 
 const databaseConfig = require('./utils/db');
 
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
